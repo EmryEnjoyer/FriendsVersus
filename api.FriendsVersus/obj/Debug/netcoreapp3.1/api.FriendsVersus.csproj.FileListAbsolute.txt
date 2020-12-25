@@ -24,3 +24,29 @@ D:\git workspaces\FriendsVersus\api.FriendsVersus\obj\Debug\netcoreapp3.1\api.Fr
 D:\git workspaces\FriendsVersus\api.FriendsVersus\obj\Debug\netcoreapp3.1\api.FriendsVersus.MvcApplicationPartsAssemblyInfo.cs
 D:\git workspaces\FriendsVersus\api.FriendsVersus\obj\Debug\netcoreapp3.1\api.FriendsVersus.MvcApplicationPartsAssemblyInfo.cache
 D:\git workspaces\FriendsVersus\api.FriendsVersus\obj\Debug\netcoreapp3.1\api.FriendsVersus.csproj.CopyComplete
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\obj\Debug\netcoreapp3.1\api.FriendsVersus.csprojAssemblyReference.cache
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\obj\Debug\netcoreapp3.1\api.FriendsVersus.AssemblyInfoInputs.cache
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\obj\Debug\netcoreapp3.1\api.FriendsVersus.AssemblyInfo.cs
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\obj\Debug\netcoreapp3.1\api.FriendsVersus.csproj.CoreCompileInputs.cache
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\obj\Debug\netcoreapp3.1\api.FriendsVersus.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\obj\Debug\netcoreapp3.1\api.FriendsVersus.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\obj\Debug\netcoreapp3.1\api.FriendsVersus.dll
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\obj\Debug\netcoreapp3.1\api.FriendsVersus.pdb
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\bin\Debug\netcoreapp3.1\appsettings.Development.json
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\bin\Debug\netcoreapp3.1\appsettings.json
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\bin\Debug\netcoreapp3.1\api.FriendsVersus.exe
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\bin\Debug\netcoreapp3.1\api.FriendsVersus.deps.json
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\bin\Debug\netcoreapp3.1\api.FriendsVersus.runtimeconfig.json
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\bin\Debug\netcoreapp3.1\api.FriendsVersus.runtimeconfig.dev.json
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\bin\Debug\netcoreapp3.1\api.FriendsVersus.dll
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\bin\Debug\netcoreapp3.1\api.FriendsVersus.pdb
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\bin\Debug\netcoreapp3.1\Microsoft.OpenApi.dll
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\obj\Debug\netcoreapp3.1\staticwebassets\api.FriendsVersus.StaticWebAssets.Manifest.cache
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\obj\Debug\netcoreapp3.1\staticwebassets\api.FriendsVersus.StaticWebAssets.xml
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\obj\Debug\netcoreapp3.1\scopedcss\bundle\api.FriendsVersus.styles.css
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\obj\Debug\netcoreapp3.1\api.FriendsVersus.RazorTargetAssemblyInfo.cache
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\obj\Debug\netcoreapp3.1\api.FriendsVersus.csproj.CopyComplete
+C:\Users\ralph\OneDrive\Documents\GitHub\FriendsVersus\api.FriendsVersus\obj\Debug\netcoreapp3.1\api.FriendsVersus.genruntimeconfig.cache

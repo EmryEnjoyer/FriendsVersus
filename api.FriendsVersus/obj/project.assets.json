@@ -193,23 +193,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Daphne\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\ralph\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\git workspaces\\FriendsVersus\\api.FriendsVersus\\api.FriendsVersus.csproj",
+      "projectUniqueName": "C:\\Users\\ralph\\OneDrive\\Documents\\GitHub\\FriendsVersus\\api.FriendsVersus\\api.FriendsVersus.csproj",
       "projectName": "api.FriendsVersus",
-      "projectPath": "D:\\git workspaces\\FriendsVersus\\api.FriendsVersus\\api.FriendsVersus.csproj",
-      "packagesPath": "C:\\Users\\Daphne\\.nuget\\packages\\",
-      "outputPath": "D:\\git workspaces\\FriendsVersus\\api.FriendsVersus\\obj\\",
+      "projectPath": "C:\\Users\\ralph\\OneDrive\\Documents\\GitHub\\FriendsVersus\\api.FriendsVersus\\api.FriendsVersus.csproj",
+      "packagesPath": "C:\\Users\\ralph\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ralph\\OneDrive\\Documents\\GitHub\\FriendsVersus\\api.FriendsVersus\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Daphne\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ralph\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -221,6 +217,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "projectReferences": {}
         }
       },
@@ -232,6 +229,7 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "Swashbuckle.AspNetCore": {
             "target": "Package",
@@ -256,7 +254,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }
