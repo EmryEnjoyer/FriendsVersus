@@ -7,5 +7,6 @@ namespace api.FriendsVersus.Dto
 {
     public class UpdateEmailRequest
     {
+        public string NewEmail { get; set; }
     }
 }

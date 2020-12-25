@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 
 namespace api.FriendsVersus.Dto
 {
-    public class GetLeaderboardRequest
+    public class GameUpdateWinnerRequest
     {
-        public string LeaderboardName { get; set; }
     }
 }

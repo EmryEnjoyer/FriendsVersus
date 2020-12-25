@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 
 namespace api.FriendsVersus.Dto
 {
-    public class UpdateMMRRequest
+    public class GameUpdateScoreRequest
     {
-        public int LeaderboardId { get; set; }
-        public int NewMmr { get; set; }
     }
 }

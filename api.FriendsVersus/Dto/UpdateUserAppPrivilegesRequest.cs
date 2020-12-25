@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace api.FriendsVersus.Dto
 {
-    public class GetUserRequest
+    public class UpdateUserAppPrivilegesRequest
     {
-        public string Username { get; set; }
+        public string NewRole { get; set; }
     }
 }

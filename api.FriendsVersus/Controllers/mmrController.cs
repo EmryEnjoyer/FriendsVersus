@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using api.FriendsVersus.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,7 +15,7 @@ namespace api.FriendsVersus.Controllers
     {
         
         [HttpPut("{userId}/updatemmr")]
-        public async Task updateUserMmr([FromRoute] int userId, [FromHeader] int leaderboardId, CancellationToken token)
+        public async Task<bool> updateUserMmr([FromRoute] int userId, [FromBody] UpdateMMRRequest request, CancellationToken token)
         {
             throw new NotImplementedException();
         }

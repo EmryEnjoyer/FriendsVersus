@@ -29,7 +29,7 @@ namespace api.FriendsVersus.Controllers
             throw new NotImplementedException();
         }
         [HttpPut("{userId}/updatePrivileges")]
-        public async Task<bool> updateUserPrivileges([FromRoute] int userId, [FromHeader] String authHash, CancellationToken token) {
+        public async Task<bool> updateUserPrivileges([FromRoute] int userId, UpdateUserAppPrivilegesRequest request, CancellationToken token) {
             throw new NotImplementedException();
         }
         [HttpGet("users")]

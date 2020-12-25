@@ -25,11 +25,11 @@ namespace api.FriendsVersus.Controllers
             throw new NotImplementedException(); 
         }
         [HttpGet("{gameId}/accept")]
-        public async Task<bool> acceptChallenge([FromRoute] int gameId, [FromBody] AcceptChallengeRequest request, CancellationToken token) {
+        public async Task<bool> acceptChallenge([FromRoute] int gameId, CancellationToken token) {
             throw new NotImplementedException();
         }
         [HttpDelete("{gameId}/delete")]
-        public async Task<bool> deleteChallenge([FromRoute] int gameId, [FromBody] ChallengeDeleteRequest request, CancellationToken token)
+        public async Task<bool> deleteChallenge([FromRoute] int gameId, CancellationToken token)
         {
             throw new NotImplementedException();
         }

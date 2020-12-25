@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using api.FriendsVersus.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,22 +14,22 @@ namespace api.FriendsVersus.Controllers
     public class UserLeaderboardMembershipController : APIController
     {
         [HttpGet("{userId}/getleaderboards")]
-        public async Task getUserLeaderboards([FromRoute] int userId, CancellationToken token)
+        public async Task<IEnumerable<Leaderboard>> getUserLeaderboards([FromBody]ListUserLeaderboardsRequest request, CancellationToken token)
         {
             throw new NotImplementedException();
         }
-        [HttpPut("{userId}/joinleaderboard")]
-        public async Task joinLeaderboard([FromRoute] int userId, [FromHeader] int leaderboardId, CancellationToken token)
+        [HttpPut("joinleaderboard")]
+        public async Task<LinkUserToLeaderboardResponse> joinLeaderboard([FromBody] LinkUserToLeaderboardRequest request, CancellationToken token)
         {
             throw new NotImplementedException();
         }
         [HttpPut("{userId}/leaveLeaderboard")]
-        public async Task leaveLeaderboard([FromRoute] int userId, [FromHeader] int leaderboardId, CancellationToken token)
+        public async Task<bool> leaveLeaderboard([FromBody]RemoveUserFromListRequest request, CancellationToken token)
         {
             throw new NotImplementedException();
         }
         [HttpPut("{leaderboardId}/updateuserprivilege")]
-        public async Task updateUserPrivilege([FromRoute] int leaderboardId, [FromHeader] int UserId, CancellationToken token)
+        public async Task<bool> updateUserPrivilege([FromBody] UserLeaderboardPrivilegesUpdateRequest request, CancellationToken token)
         {
             throw new NotImplementedException();
         }

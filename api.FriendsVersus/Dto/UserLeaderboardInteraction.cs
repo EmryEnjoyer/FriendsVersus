@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace api.FriendsVersus.Dto
 {
-    public class ChallengeDeleteRequest
+    public class UserLeaderboardInteraction
     {
-        public string gameId { get; set; }
+        public int UserId { get; set; }
+        public int LeaderboardId { get; set; }
     }
 }
