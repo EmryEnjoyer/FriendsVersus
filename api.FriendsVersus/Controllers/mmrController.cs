@@ -10,7 +10,7 @@ namespace api.FriendsVersus.Controllers
 {
     [Route("api/mmr")]
     [ApiController]
-    public class mmrController : APIController
+    public class MmrController : APIController
     {
         
         [HttpPut("{userId}/updatemmr")]
