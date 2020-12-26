@@ -1,11 +1,15 @@
 Game.db
     - challenges
-        gameId PRIMARY KEY      usergroupId Integer     ChallengerId Integer        ChallengedId Integer        ChallengerMmr Integer       ChallengedMmr Integer       Accepted Bool
+        gameId PRIMARY KEY      usergroupId Integer     ChallengerId Integer        ChallengedId Integer        ChallengerMmr Integer       ChallengedMmr Integer       Accepted Bool       InviteUrl String
     - games
         gameId PRIMARY KEY      usergroupId Integer     playerOneId Integer     playerTwoId Integer         ScorePlayerOne Integer      ScorePlayerTwo Integer     isActive Bool
+    - gameUrls
+        gameUrlId       gameId      InviteLinks
 Users.db
     - Users
-        userId PRIMARY KEY      username      passwd String       dateJoined String       banned Bool
+        userId PRIMARY KEY      username      passwd String         Email String       dateJoined String       banned Bool
+    - UserVerificationLinks
+        userId PRIMARY KEY      VerificationLink String
 Usergroups.db
     - Usergrouplist
         usergroupId PRIMARY KEY     usergroupName String        userGroupOwnerId Integer
@@ -160,3 +164,58 @@ DTOs needed:
 
     linkUserToGroupResponse
     Header: {RedirectURL: }
+
+Queries Needed:
+Create table Users
+Create table Challenges
+Create table Games
+Create table Leaderboards
+Create table UserLeaderboardInteractions
+create table UserMMR
+Create table LeaderboardInvitations
+
+X Get User
+Get Challenge
+X Get Game
+Get Leaderboard
+Get UserLeaderboardInteraction
+Get User MMR
+X Get User Password
+
+X Update Username in Users
+X Update Password in Users
+X Update Email in Users
+Update LeaderboardName in Leaderboards
+Update Status of Game in Games
+Update GameId Score for UserId
+Update Role for UserId in Users
+Update Role for UserId in UserLeaderboardInteractions
+Update Wins for UserId, LeaderboardId in UserLeaderboardInteractions
+Update Losses for UserId, LeaderboardId in UserLeaderboardInteractions
+
+X Insert User into Users
+Insert Game into Games
+Insert Challenge indto Challenges
+Insert Leaderboard into Leaderboards
+Insert UserId, LeaderboardId Into UserLeaderboardInteractions
+Insert UserId, LeaderboardId mapped to MMR into MMR
+
+Delete User from Users
+Delete Game from Games
+Delete Challenge from Challenges
+Delete Leaderboard from Leaderboards
+Delete index UserId, LeaderboardId from UserLeaderboardInteractions
+Delete key UserId, LeaderboardId from MMR
+
+Data Rules (Special thanks to Mark Roberts for helping to a heavy extent with these):
+Challenges will always be in a 1 to 2 relationship with Users
+Games will always be in a 1 to 1 relationship with challenges
+Users will be in a 1 to n relationship with UserLeaderboardInteractions
+LeaderboardInteractions will be in an n to 1 relationship with Users
+Leaderboards will always have 1 and only 1 User with the role "owner"
+Users in a Game will both share a common LeaderboardId
+The ChallengeId is the GameId, The Challenge has a LeaderboardId as well.
+A User will have a 1 to n relationship with MMR
+MMR is not unique
+A UserId is unique
+A GameId is unique
