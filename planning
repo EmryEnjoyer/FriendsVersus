@@ -1,0 +1,162 @@
+Game.db
+    - challenges
+        gameId PRIMARY KEY      usergroupId Integer     ChallengerId Integer        ChallengedId Integer        ChallengerMmr Integer       ChallengedMmr Integer       Accepted Bool
+    - games
+        gameId PRIMARY KEY      usergroupId Integer     playerOneId Integer     playerTwoId Integer         ScorePlayerOne Integer      ScorePlayerTwo Integer     isActive Bool
+Users.db
+    - Users
+        userId PRIMARY KEY      username      passwd String       dateJoined String       banned Bool
+Usergroups.db
+    - Usergrouplist
+        usergroupId PRIMARY KEY     usergroupName String        userGroupOwnerId Integer
+    - UserGroupInvites
+        usergroupId PRIMARY KEY     invite String
+UsergroupMemberships.db
+    - usergroupMembership
+        (usergroupId Integer userId Integer) COMPOSITE PRIMARY KEY      wins Integer      losses Integer        role String         banned Bool
+    - mmrDistribution
+        (usergroupId Integer userId Integer) COMPOSITE PRIMARY KEY      Mmr Integer
+
+DTOs needed:
+    GetUserRequest: returns User DTO
+    Header: {Authorization: Bearer <Token>, Authorization: ApiKey <Token>}
+    Body: {username:}
+
+    User
+    Header: {}
+    Body:
+    {
+        userId:
+        username:
+        email:
+        dateJoined:
+        privileges:
+    }
+
+    GetGroupRequest: returns Group DTO
+    Header: {Authorization: Bearer <Token>, Authorization: ApiKey <Token>}
+    
+    Group
+    Header: {}
+    Body:
+    {
+        groupId:
+        groupName:
+        memberCount:
+        dateCreated:
+        defaultMmr:
+    }
+    
+    GroupInviteRequest returns GroupInviteResponse DTO
+    Header: {Authorization: Bearer <Token>, Authorization: ApiKey <Token>}
+    Body: {
+        groupId:
+        userId:
+        oneTimeUse:
+        timeExtent:
+    }
+
+    GroupInviteResponse
+    Header: {uniqueInviteLink:}
+
+    UserLoginRequest returns TokenResponse
+        Header: {Authorization: ApiToken <Token>}
+        Body: {username: 
+        passwd:}
+    
+    TokenResponse
+        Header: {Authorization: Bearer <Token>}
+        Body: {}
+    
+    UserCreationRequest returns UserCreationResponse
+    Header: {Authorization: Bearer <ApiToken>, Authorization: ApiKey <Token>}
+    Body: {
+        Username:
+        Email:
+    }
+    
+    UserCreationResponse
+    Header: {}
+    Body: {
+        RedirectUrl:
+    }
+    
+    UserEmailAuthenticationRequest returns UserEmailAuthenticationResponse
+    Header: {Authorization: Bearer <TempToken>, Authorization: ApiKey <Token>}
+    Body: {
+        Password: (Hashed)
+    }
+    
+    UserEmailAuthenticationResponse
+    Header: {Authorization: Bearer <Token>}
+    
+    GroupCreationRequest returns OK or unauthorizedaccess
+    Header: {Authorization: Bearer <Token>, Authorization: ApiKey <Token>}
+    Body:
+    {
+        GroupName:
+        DefaultMmr:
+        Access:
+        MaxMembers:
+    }
+
+    GroupDeletionRequest returns OK or excepts
+    Header: {Authorization: Bearer <Token>, Authorization: ApiKey <Token>}
+    Body:
+    {
+        GroupName:
+        userId
+    }
+
+    ChallengeSendRequest returns ChallengeSendResponse
+    Header: {Authorization: Bearer <Token>, Authorization: ApiKey <Token>}
+    Body:
+    {
+        challengerName:
+        challengedName:
+        groupId:
+    }
+
+    ChallengeSendResponse:
+    Header: {WaitingRoomURL: }
+
+    ChallengeAcceptRequest returns ChallengeAcceptResponse
+    Header: {Authorization: Bearer <Token>, Authorization: ApiKey <Token>}
+    Body:
+    {
+        gameId:
+    }
+
+    ChallengeAcceptResponse
+    Header: {gameUrl:}
+
+    ChallengeDeleteRequest returns ChallengeDeleteResponse
+    Header: {Authorization: Bearer <Token>, Authorization: ApiKey <Token>}
+    Body:
+    {
+        gameId:
+    }
+
+    ChallengeDeleteResponse
+    Header: {RedirectURL:}
+
+    UserGroupPrivilegeChangeRequest returns OK or excepts
+    Header: {Authorization: Bearer <Token>, Authorization: ApiKey <Token>}
+    Body:
+    {
+        senderName:
+        targetName:
+        oldRole:
+        newRole:
+    }
+
+    linkUserToGroupRequest returns linkUserToGroupResponse
+    Header: {Authorization: Bearer <Token>, Authorization: ApiKey <Token>}
+    Body:
+    {
+        invite:
+        groupName:
+    }
+
+    linkUserToGroupResponse
+    Header: {RedirectURL: }
