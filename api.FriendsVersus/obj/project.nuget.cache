@@ -1,15 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "3O1I4WXiCzOhCzVboqQmLRAkbDrgtHu3Aw59y73ytl5h21Pp0aY1vFhoApooiH1pNKUpJJE+vy9MQ+tkrRQrKA==",
+  "dgSpecHash": "reXBdWdB0aQlDejn2+YnXtjcc11soh3998jHfIHuUVLomJoi/lZFWQKDQY6Gtq4YsH1Ma6FhY5uWq6UteDeV+g==",
   "success": true,
   "projectFilePath": "C:\\Users\\ralph\\OneDrive\\Documents\\GitHub\\FriendsVersus\\api.FriendsVersus\\api.FriendsVersus.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ralph\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\ralph\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\ralph\\.nuget\\packages\\stub.system.data.sqlite.core.netstandard\\1.0.113.2\\stub.system.data.sqlite.core.netstandard.1.0.113.2.nupkg.sha512",
     "C:\\Users\\ralph\\.nuget\\packages\\swashbuckle.aspnetcore\\5.6.2\\swashbuckle.aspnetcore.5.6.2.nupkg.sha512",
     "C:\\Users\\ralph\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.6.2\\swashbuckle.aspnetcore.swagger.5.6.2.nupkg.sha512",
     "C:\\Users\\ralph\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.6.2\\swashbuckle.aspnetcore.swaggergen.5.6.2.nupkg.sha512",
-    "C:\\Users\\ralph\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.6.2\\swashbuckle.aspnetcore.swaggerui.5.6.2.nupkg.sha512"
+    "C:\\Users\\ralph\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.6.2\\swashbuckle.aspnetcore.swaggerui.5.6.2.nupkg.sha512",
+    "C:\\Users\\ralph\\.nuget\\packages\\system.data.sqlite.core\\1.0.113.7\\system.data.sqlite.core.1.0.113.7.nupkg.sha512"
   ],
   "logs": []
 }

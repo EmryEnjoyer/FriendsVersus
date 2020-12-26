@@ -18,7 +18,7 @@ namespace api.FriendsVersus.Controllers
         public async Task createGame(CancellationToken token) {
             throw new NotImplementedException();
         }
-        [HttpPost("{gameId}/save")]
+        [HttpGet("{gameId}/save")]
         public async Task saveGame([FromRoute] int gameId, CancellationToken token) {
             throw new NotImplementedException();
         }
@@ -28,7 +28,7 @@ namespace api.FriendsVersus.Controllers
             throw new NotImplementedException();
         }
         [HttpPut("{gameId}/updatewinner")]
-        public async Task updateWinner([FromRoute] int gameId, [FromHeader] String winner, CancellationToken token) {
+        public async Task updateWinner([FromRoute] int gameId, CancellationToken token) {
             throw new NotImplementedException();
         }
         [HttpPut("{gameId}/updatescore")]
