@@ -28,5 +28,24 @@ namespace api.FriendsVersus.Data
                 IsActive Integer
             }
         ";
+        public static string createChallengesQuery = @"
+            CREATE TAABLE IF NOT EXISTS Challenges {
+                GameId Integer PRIMARY KEY,
+                LeaderboardId Integer,
+                ChallengerId Integer,
+                ChallengedId Integer,
+                ChallengerMmr Integer,
+                ChallengedMmr Integer,
+                Accepted Integer,
+                InviteLink Text
+            }
+        ";
+        public static string createLeaderboardsQuery = @"
+            CREATE TABLE IF NOT EXISTS Leaderboards {
+                LeaderboardId Integer PRIMARY KEY,
+                LeaderboardName Text,
+                LeaderboardOwnerId Integer
+            }
+        ";
     }
 }
