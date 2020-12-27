@@ -7,7 +7,7 @@ namespace api.FriendsVersus.Data
 {
     public class GameQueries
     {
-        public static string getGameByIdQuery = @"
+        public const string getGameByIdQuery = @"
             SELECT
                 GameId,
                 LeaderboardId,
@@ -23,7 +23,7 @@ namespace api.FriendsVersus.Data
             WHERE
                 GameId = $GameId
         ";
-        public static string insertGameQuery = @"
+        public const string insertGameQuery = @"
             INSERT INTO Games {
                 LeaderboardId,
                 PlayerOneId,
@@ -42,7 +42,7 @@ namespace api.FriendsVersus.Data
                 $IsActive
             }
         ";
-        public static string incrementScorePlayerOneQuery = @"
+        public const string incrementScorePlayerOneQuery = @"
             UPDATE
                 Games
             SET
@@ -50,7 +50,7 @@ namespace api.FriendsVersus.Data
             WHERE
                 GameId = $GameId
         ";
-        public static string incrementScorePlayerTwoQuery = @"
+        public const string incrementScorePlayerTwoQuery = @"
             UPDATE
                 Games
             SET
@@ -58,7 +58,7 @@ namespace api.FriendsVersus.Data
             WHERE
                 GameId = $GameId
         ";
-        public static string setScorePlayerOneQuery = @"
+        public const string setScorePlayerOneQuery = @"
             UPDATE
                 Games
             SET
@@ -66,7 +66,7 @@ namespace api.FriendsVersus.Data
             WHERE
                 GameId = $GameId
         ";
-        public static string setScorePlayerTwoQuery = @"
+        public const string setScorePlayerTwoQuery = @"
             UPDATE
                 Games
             SET
@@ -74,7 +74,7 @@ namespace api.FriendsVersus.Data
             WHERE
                 GameId = $GameId
         ";
-        public static string setIsActiveQuery = @"
+        public const string setIsActiveQuery = @"
             UPDATE
                 Games
             SET
@@ -82,7 +82,7 @@ namespace api.FriendsVersus.Data
             WHERE
                 GameId = $GameId
         ";
-        public static string setWinnerQuery = @"
+        public const string setWinnerQuery = @"
             UPDATE
                 Games
             SET
@@ -90,7 +90,7 @@ namespace api.FriendsVersus.Data
             WHERE
                 GameId = $GameId
         ";
-        public static string deleteGameQuery = @"
+        public const string deleteGameQuery = @"
             DELETE FROM Games WHERE GameId = $GameId
         ";
     }

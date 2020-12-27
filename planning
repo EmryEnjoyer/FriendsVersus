@@ -166,13 +166,14 @@ DTOs needed:
     Header: {RedirectURL: }
 
 Queries Needed:
-Create table Users
-Create table Challenges
-Create table Games
-Create table Leaderboards
-Create table UserLeaderboardInteractions
-create table UserMMR
+- Create table Users
+- Create table Challenges
+- Create table Games
+- Create table Leaderboards
+- Create table UserLeaderboardInteractions
+- create table UserMMR
 Create table LeaderboardInvitations
+Create table UserVerificationLinks
 
 X Get User
 Get Challenge

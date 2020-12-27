@@ -7,7 +7,7 @@ namespace api.FriendsVersus.Data
 {
     public class UserQueries
     {
-        public static string getUserByUsernameQuery = @"
+        public const string getUserByUsernameQuery = @"
             SELECT
                 UserId,
                 Username,
@@ -17,7 +17,7 @@ namespace api.FriendsVersus.Data
                 Users
             WHERE
                 Username = $Username";
-        public static string getUserByUserIdQuery = @"
+        public const string getUserByUserIdQuery = @"
             SELECT
                 UserId,
                 Username,
@@ -28,14 +28,14 @@ namespace api.FriendsVersus.Data
             WHERE
                 UserId = $UserId
         ";
-        public static string getPasswordQuery = @"
+        public const string getPasswordQuery = @"
             SELECT
                 Passwd
             FROM
                 Users
             WHERE
                 UserId = $UserId";
-        public static string insertUserQuery = @"
+        public const string insertUserQuery = @"
             INSERT INTO Users {
                 Username,
                 Passwd,
@@ -47,7 +47,7 @@ namespace api.FriendsVersus.Data
                 $Email,
                 $DateJoined
             }";
-        public static string updateUsernameQuery = @"
+        public const string updateUsernameQuery = @"
             UPDATE 
                 Users
             SET
@@ -55,7 +55,7 @@ namespace api.FriendsVersus.Data
             WHERE
                 UserId = $UserId
         ";
-        public static string updatePasswordQuery = @"
+        public const string updatePasswordQuery = @"
             UPDATE
                 Users
             SET
@@ -63,7 +63,7 @@ namespace api.FriendsVersus.Data
             WHERE
                 UserId = $UserId
         ";
-        public static string updateEmailQuery = @"
+        public const string updateEmailQuery = @"
             UPDATE
                 Users
             SET
@@ -72,7 +72,7 @@ namespace api.FriendsVersus.Data
                 UserId = $UserId
         ";
         
-        public static string deleteUserQuery = @"
+        public const string deleteUserQuery = @"
         DELETE FROM
             Users
         WHERE
