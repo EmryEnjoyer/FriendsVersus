@@ -7,14 +7,11 @@ namespace api.FriendsVersus.Data
 {
     public class SchemaQueries
     {
-        /*
-         Create Tables
-        */
         public const string createUsersQuery = @"
             CREATE TABLE IF NOT EXISTS Users (
                 UserId Integer NOT NULL PRIMARY KEY,
                 Username Text NOT NULL,
-                Password Text NOT NULL,
+                Passwd Text NOT NULL,
                 Email Text NOT NULL,
                 DateJoined Text NOT NULL,
                 Banned Integer NOT NULL
@@ -27,8 +24,8 @@ namespace api.FriendsVersus.Data
                 ChallengedScore Integer NOT NULL,
                 WinnerId Integer NULL,
                 IsActive Integer NOT NULL,
-                FOREIGN KEY fk_games_winnerId(WinnerId) REFERENCES Users(UserId) ON DELETE CASCADE ON UPDATE NO ACTION,
-                FOREIGN KEY fk_games_challenge(GameId) REFERENCES Challenges(GameId) ON DELETE CASCADE ON UPDATE NO ACTION
+                FOREIGN KEY (WinnerId) REFERENCES Users(UserId) ON DELETE CASCADE ON UPDATE NO ACTION,
+                FOREIGN KEY (GameId) REFERENCES Challenges(GameId) ON DELETE CASCADE ON UPDATE NO ACTION
             ) WITHOUT ROWID
         ";
         public const string createChallengesQuery = @"

@@ -7,6 +7,11 @@ namespace api.FriendsVersus.Data
 {
     public class UserQueries
     {
+
+        public const string createUsersUsernameIndex = @"
+            CREATE UNIQUE INDEX IF NOT EXISTS ix_usernames
+            ON Users(Username)
+        ";
         public const string getUserByUsernameQuery = @"
             SELECT
                 UserId,
@@ -28,25 +33,34 @@ namespace api.FriendsVersus.Data
             WHERE
                 UserId = $UserId
         ";
-        public const string getPasswordQuery = @"
+        public const string getPasswordByUserIdQuery = @"
             SELECT
                 Passwd
             FROM
                 Users
             WHERE
                 UserId = $UserId";
+        public const string getPasswordByUsernameQuery = @"
+            SELECT
+                Passwd
+            FROM
+                Users
+            WHERE
+                Username = $Username";
         public const string insertUserQuery = @"
-            INSERT INTO Users {
+            INSERT INTO Users (
                 Username,
                 Passwd,
                 Email,
-                DateJoined
-            } VALUES {
+                DateJoined,
+                Banned
+            ) VALUES (
                 $Username,
                 $Passwd,
                 $Email,
-                $DateJoined
-            }";
+                $DateJoined,
+                0
+            )";
         public const string updateUsernameQuery = @"
             UPDATE 
                 Users
@@ -72,12 +86,7 @@ namespace api.FriendsVersus.Data
                 UserId = $UserId
         ";
         
-        public const string deleteUserQuery = @"
-        DELETE FROM
-            Users
-        WHERE
-            UserId = $UserId
-        ";
+        public const string deleteUserQuery = @"DELETE FROM Users WHERE UserId = $UserId";
 
     }
 }

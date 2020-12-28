@@ -24,23 +24,17 @@ namespace api.FriendsVersus.Data
                 GameId = $GameId
         ";
         public const string insertGameQuery = @"
-            INSERT INTO Games {
-                LeaderboardId,
-                PlayerOneId,
-                PlayerTwoId,
-                PlayerOneScore,
-                PlayerTwoScore,
-                GameUrl,
+            INSERT INTO Games (
+                GameId,
+                ChallengerScore,
+                ChallengedScore,
                 IsActive
-            } VALUES {
-                $LeaderboardId,
-                $PlayerOneId,
-                $PlayerTwoId,
-                $PlayerOneScore,
-                $PlayerTwoScore,
-                $GameUrl,
+            ) VALUES (
+                $GameId,
+                $ChallengerScore,
+                $ChallengedScore,
                 $IsActive
-            }
+            )
         ";
         public const string incrementScorePlayerOneQuery = @"
             UPDATE

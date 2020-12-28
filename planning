@@ -5,17 +5,14 @@ Game.db
         gameId PRIMARY KEY      usergroupId Integer     playerOneId Integer     playerTwoId Integer         ScorePlayerOne Integer      ScorePlayerTwo Integer     isActive Bool
     - gameUrls
         gameUrlId       gameId      InviteLinks
-Users.db
     - Users
         userId PRIMARY KEY      username      passwd String         Email String       dateJoined String       banned Bool
     - UserVerificationLinks
         userId PRIMARY KEY      VerificationLink String
-Usergroups.db
     - Usergrouplist
         usergroupId PRIMARY KEY     usergroupName String        userGroupOwnerId Integer
     - UserGroupInvites
         usergroupId PRIMARY KEY     invite String
-UsergroupMemberships.db
     - usergroupMembership
         (usergroupId Integer userId Integer) COMPOSITE PRIMARY KEY      wins Integer      losses Integer        role String         banned Bool
     - mmrDistribution
@@ -172,20 +169,20 @@ Queries Needed:
 - Create table Leaderboards
 - Create table UserLeaderboardInteractions
 - create table UserMMR
-Create table LeaderboardInvitations
-Create table UserVerificationLinks
+- Create table LeaderboardInvitations
+- Create table UserVerificationLinks
 
-X Get User
+- Get User
 Get Challenge
-X Get Game
+- Get Game
 Get Leaderboard
 Get UserLeaderboardInteraction
 Get User MMR
-X Get User Password
+- Get User Password
 
-X Update Username in Users
-X Update Password in Users
-X Update Email in Users
+- Update Username in Users
+- Update Password in Users
+- Update Email in Users
 Update LeaderboardName in Leaderboards
 Update Status of Game in Games
 Update GameId Score for UserId
@@ -194,15 +191,15 @@ Update Role for UserId in UserLeaderboardInteractions
 Update Wins for UserId, LeaderboardId in UserLeaderboardInteractions
 Update Losses for UserId, LeaderboardId in UserLeaderboardInteractions
 
-X Insert User into Users
+- Insert User into Users
 Insert Game into Games
 Insert Challenge indto Challenges
 Insert Leaderboard into Leaderboards
 Insert UserId, LeaderboardId Into UserLeaderboardInteractions
 Insert UserId, LeaderboardId mapped to MMR into MMR
 
-Delete User from Users
-Delete Game from Games
+- Delete User from Users
+- Delete Game from Games
 Delete Challenge from Challenges
 Delete Leaderboard from Leaderboards
 Delete index UserId, LeaderboardId from UserLeaderboardInteractions
