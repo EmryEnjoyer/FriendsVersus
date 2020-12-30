@@ -14,7 +14,8 @@ namespace api.FriendsVersus.Data
                 Passwd Text NOT NULL,
                 Email Text NOT NULL,
                 DateJoined Text NOT NULL,
-                Banned Integer NOT NULL
+                Banned Integer NOT NULL,
+                IsAdmin Integer NOT NULL
             )
         ";
         public const string createGamesQuery = @"
@@ -29,15 +30,15 @@ namespace api.FriendsVersus.Data
             ) WITHOUT ROWID
         ";
         public const string createChallengesQuery = @"
-            CREATE TAABLE IF NOT EXISTS Challenges (
+            CREATE TABLE IF NOT EXISTS Challenges (
                 GameId Integer NOT NULL PRIMARY KEY,
                 LeaderboardId Integer NOT NULL,
                 ChallengerId Integer NOT NULL,
                 ChallengedId Integer NOT NULL,
                 Accepted Integer NOT NULL,
-                FOREIGN KEY (LeaderboardId) REFERENCES Leaderboards(LeaderboardId) ON DELETE CASCADES ON UPDATE NO ACTION,
-                FOREIGN KEY (ChallengerId) REFERENCES Users(UserId) ON DELETE CASCADES ON UPDATE NO ACTION,
-                FOREIGN KEY (ChallengedId) REFERENCES Users(UserId) ON DELETE CASCADES ON UPDATE NO ACTION
+                FOREIGN KEY (LeaderboardId) REFERENCES Leaderboards(LeaderboardId) ON DELETE CASCADE ON UPDATE NO ACTION,
+                FOREIGN KEY (ChallengerId) REFERENCES Users(UserId) ON DELETE CASCADE ON UPDATE NO ACTION,
+                FOREIGN KEY (ChallengedId) REFERENCES Users(UserId) ON DELETE CASCADE ON UPDATE NO ACTION
             )
         ";
         public const string createLeaderboardsQuery = @"
@@ -45,7 +46,7 @@ namespace api.FriendsVersus.Data
                 LeaderboardId Integer NOT NULL PRIMARY KEY,
                 LeaderboardName Text NOT NULL,
                 LeaderboardOwnerId Integer NOT NULL,
-                FOREIGN KEY (LeaderboardOwnerId) REFERENCES Users(UserId) ON DELETE CASCADES ON UPDATE NO ACTION
+                FOREIGN KEY (LeaderboardOwnerId) REFERENCES Users(UserId) ON DELETE CASCADE ON UPDATE NO ACTION
             )
         ";
         public const string createUserLeaderboardInteractionsQuery = @"
@@ -57,8 +58,8 @@ namespace api.FriendsVersus.Data
                 Role Text NOT NULL,
                 Banned Integer NOT NULL,
                 PRIMARY KEY(UserId, LeaderboardId),
-                FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADES ON UPDATE NO ACTION,
-                FOREIGN KEY (LeaderboardId) REFERENCES Leaderboards(LeaderboardId) ON DELETE CASCADES ON UPDATE NO ACTION
+                FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE ON UPDATE NO ACTION,
+                FOREIGN KEY (LeaderboardId) REFERENCES Leaderboards(LeaderboardId) ON DELETE CASCADE ON UPDATE NO ACTION
             ) WITHOUT ROWID
         ";
         public const string createUserMmrTableQuery = @"
@@ -67,8 +68,8 @@ namespace api.FriendsVersus.Data
                 LeaderboardId Integer NOT NULL,
                 Mmr Integer NOT NULL,
                 PRIMARY KEY (UserId, LeaderboardId),
-                FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADES ON UPDATE NO ACTION,
-                FOREIGN KEY (LeaderboardId) REFERENCES Leaderboards(LeaderboardId) ON DELETE CASCADES ON UPDATE NO ACTION
+                FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE ON UPDATE NO ACTION,
+                FOREIGN KEY (LeaderboardId) REFERENCES Leaderboards(LeaderboardId) ON DELETE CASCADE ON UPDATE NO ACTION
             ) WITHOUT ROWID
         ";
 
@@ -76,14 +77,14 @@ namespace api.FriendsVersus.Data
             CREATE TABLE IF NOT EXISTS UserVerificationLinks (
                 UserId Integer NOT NULL PRIMARY KEY,
                 VerificationLink Text NOT NULL,
-                FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADES ON UPDATE NO ACTION
+                FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE ON UPDATE NO ACTION
             )
         ";
         public const string createLeaderboardInvitationTableQuery = @"
             CREATE TABLE IF NOT EXISTS LeaderboardInvites (
                 LeaderboardId Integer NOT NULL PRIMARY KEY ,
                 LeaderboardInviteLink Text NOT NULL,
-                FOREIGN KEY (LeaderboardId) REFERENCES Leaderboards(LeaderboardId) ON DELETE CASCADES ON UPDATE NO ACTION
+                FOREIGN KEY (LeaderboardId) REFERENCES Leaderboards(LeaderboardId) ON DELETE CASCADE ON UPDATE NO ACTION
             )
         ";
     }

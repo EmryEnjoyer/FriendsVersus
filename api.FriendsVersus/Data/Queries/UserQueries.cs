@@ -27,7 +27,9 @@ namespace api.FriendsVersus.Data
                 UserId,
                 Username,
                 Email,
-                DateJoined
+                DateJoined,
+                Banned,
+                IsAdmin
             FROM
                 Users
             WHERE
@@ -53,12 +55,14 @@ namespace api.FriendsVersus.Data
                 Passwd,
                 Email,
                 DateJoined,
-                Banned
+                Banned,
+                IsAdmin
             ) VALUES (
                 $Username,
                 $Passwd,
                 $Email,
                 $DateJoined,
+                0,
                 0
             )";
         public const string updateUsernameQuery = @"
@@ -85,7 +89,23 @@ namespace api.FriendsVersus.Data
             WHERE
                 UserId = $UserId
         ";
-        
+        public const string updateUserIsAdminQuery = @"
+            UPDATE
+                Users
+            SET
+                IsAdmin = CASE IsAdmin WHEN 0 THEN 1 ELSE 0 END
+            WHERE
+                UserId = $UserId
+        ";
+        public const string updateUserIsBannedQuery = @"
+            UPDATE
+                Users
+            SET
+                Banned = CASE Banned WHEN 0 THEN 1 ELSE 0 END
+            WHERE
+                UserId = $UserId
+        ";
+
         public const string deleteUserQuery = @"DELETE FROM Users WHERE UserId = $UserId";
 
     }

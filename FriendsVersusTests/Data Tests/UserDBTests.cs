@@ -3,7 +3,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
-namespace FriendsVersusTests
+namespace FriendsVersusTests.Data_Tests
 {
     [TestClass]
     public class UserDBTests
@@ -56,7 +56,7 @@ namespace FriendsVersusTests
             {
                 conn.Open();
                 SqliteCommand command = new SqliteCommand(UserQueries.insertUserQuery, conn);
-                command.Parameters.AddWithValue("$Username", "Test1");
+                command.Parameters.AddWithValue("$Username", "Jerry");
                 command.Parameters.AddWithValue("$Passwd", "Test2");
                 command.Parameters.AddWithValue("$Email", "Test3");
                 command.Parameters.AddWithValue("$DateJoined", "Test4");
@@ -193,6 +193,52 @@ namespace FriendsVersusTests
                     Assert.AreEqual(results.GetString(2), "Test8");
                 }
                 
+                conn.Close();
+            }
+        }
+
+        [TestMethod]
+        public void TestCanUserPrivilegesBeUpdated()
+        {
+            using(SqliteConnection conn = new SqliteConnection(connectionString))
+            {
+                conn.Open();
+                SqliteCommand command = new SqliteCommand(UserQueries.updateUserIsAdminQuery, conn);
+                command.Parameters.AddWithValue("$UserId", 1);
+
+                command.ExecuteScalar();
+
+                SqliteCommand command2 = new SqliteCommand(UserQueries.getUserByUserIdQuery, conn);
+                command2.Parameters.AddWithValue("$UserId", 1);
+
+                SqliteDataReader result = command2.ExecuteReader();
+
+                result.Read();
+
+                Assert.AreEqual(result.GetInt32(5), 1);
+                conn.Close();
+            }
+        }
+
+        [TestMethod]
+        public void TestCanUserBannedBeUpdated()
+        {
+            using (SqliteConnection conn = new SqliteConnection(connectionString))
+            {
+                conn.Open();
+                SqliteCommand command = new SqliteCommand(UserQueries.updateUserIsBannedQuery, conn);
+                command.Parameters.AddWithValue("$UserId", 1);
+
+                command.ExecuteScalar();
+
+                SqliteCommand command2 = new SqliteCommand(UserQueries.getUserByUserIdQuery, conn);
+                command2.Parameters.AddWithValue("$UserId", 1);
+
+                SqliteDataReader result = command2.ExecuteReader();
+
+                result.Read();
+
+                Assert.AreEqual(result.GetInt32(4), 1);
                 conn.Close();
             }
         }

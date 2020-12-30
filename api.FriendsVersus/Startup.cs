@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.FriendsVersus.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -60,6 +61,9 @@ namespace api.FriendsVersus
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
                 c.RoutePrefix = string.Empty;
             });
+            var startup = new DbStartup(Configuration);
+
+            var startupTask = startup.Startup();
         }
     }
 }
