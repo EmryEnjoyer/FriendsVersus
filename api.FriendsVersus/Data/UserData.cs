@@ -15,5 +15,7 @@ namespace api.FriendsVersus.Data
         {
             _connectionString = config.ThrowIfNull("Configuration").GetConnectionString("Appdata").ThrowIfNull("connectionString");
         }
+
+        
     }
 }

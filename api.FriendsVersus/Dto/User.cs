@@ -16,6 +16,7 @@ namespace api.FriendsVersus.Dto
         public string Username { get; set; }
         public string Email { get; set; }
         public string DateJoined { get; set; }
-        public string Privileges { get; set; }
+        public int Banned { get; set; }
+        public int IsAdmin{ get; set; }
     }
 }

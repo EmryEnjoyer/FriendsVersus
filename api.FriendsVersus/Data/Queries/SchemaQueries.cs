@@ -87,5 +87,11 @@ namespace api.FriendsVersus.Data
                 FOREIGN KEY (LeaderboardId) REFERENCES Leaderboards(LeaderboardId) ON DELETE CASCADE ON UPDATE NO ACTION
             )
         ";
+        public const string createUserAuthenticationTokenTableQuery = @"
+            CREATE TABLE IF NOT EXISTS Tokens {
+                UserId Integer NOT NULL PRIMARY KEY,
+                Token Text NOT NULL,
+                FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE ON UPDATE NO ACTION
+            ) WITHOUT ROWID";
     }
 }

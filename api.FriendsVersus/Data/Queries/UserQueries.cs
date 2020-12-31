@@ -108,5 +108,22 @@ namespace api.FriendsVersus.Data
 
         public const string deleteUserQuery = @"DELETE FROM Users WHERE UserId = $UserId";
 
+        /*
+         Authentication queries
+         */
+        public const string authorizeUserQuery = @"
+            INSERT INTO Tokens (
+                UserId,
+                Token
+            ) VALUES (
+                $UserId,
+                $Token
+            )
+        ";
+
+        public const string DeauthorizeUserQuery = @"
+            DELETE FROM Tokens WHERE UserId = $UserId
+        ";
+
     }
 }
