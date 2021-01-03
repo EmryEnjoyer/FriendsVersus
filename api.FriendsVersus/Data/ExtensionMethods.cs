@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.Sqlite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,5 +14,13 @@ namespace api.FriendsVersus.Data
             
             return instance;
         }
+        /*
+        public static bool TryGetValue(this SqliteDataReader reader, out object value)
+        {
+
+
+            return false;
+        }
+        */
     }
 }

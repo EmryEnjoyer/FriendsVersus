@@ -1,8 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace api.FriendsVersus.Data
@@ -17,8 +14,12 @@ namespace api.FriendsVersus.Data
                 GetConnectionString("AppData").
                 ThrowIfNull("connectionString");
         }
-
+        /// <summary>
+        /// sets up the database.
+        /// </summary>
+        /// <returns></returns>
         public async Task Startup() { 
+            //Users
             using(SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
@@ -26,6 +27,7 @@ namespace api.FriendsVersus.Data
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
+            //Leaderboards
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
@@ -33,6 +35,7 @@ namespace api.FriendsVersus.Data
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
+            //Challenges
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
@@ -40,6 +43,7 @@ namespace api.FriendsVersus.Data
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
+            //Games
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
@@ -47,6 +51,7 @@ namespace api.FriendsVersus.Data
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
+            //UserLeaderboardInteractions
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
@@ -54,6 +59,7 @@ namespace api.FriendsVersus.Data
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
+            //UserMMRTable
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
@@ -61,6 +67,7 @@ namespace api.FriendsVersus.Data
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
+            //UserVerificationLinks
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
@@ -68,10 +75,18 @@ namespace api.FriendsVersus.Data
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
+            //LeaderboardInvitationLinks
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
                 SqliteCommand command = new SqliteCommand(SchemaQueries.createLeaderboardInvitationTableQuery);
+                await command.ExecuteNonQueryAsync();
+                conn.Close();
+            }
+            using (SqliteConnection conn = new SqliteConnection(_connectionString))
+            {
+                conn.Open();
+                SqliteCommand command = new SqliteCommand(SchemaQueries.createUserAuthenticationTokenTableQuery);
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }

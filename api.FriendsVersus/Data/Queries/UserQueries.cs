@@ -17,7 +17,9 @@ namespace api.FriendsVersus.Data
                 UserId,
                 Username,
                 Email,
-                DateJoined
+                DateJoined,
+                Banned,
+                IsAdmin
             FROM
                 Users
             WHERE
