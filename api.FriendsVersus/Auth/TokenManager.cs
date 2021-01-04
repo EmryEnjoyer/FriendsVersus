@@ -34,10 +34,10 @@ namespace api.FriendsVersus.Auth
             User user;
             if (username != null)
             {
-                user = await (_accessLayer.GetUserIfExists(_config, username));
+                user = await (_accessLayer.GetUserIfExists(username));
             } else
             {
-                user = await (_accessLayer.GetUserIfExists(_config, null, userId));
+                user = await (_accessLayer.GetUserIfExists(null, userId));
             }
             
             if (user != null)

@@ -1,7 +1,10 @@
 using api.FriendsVersus.Data;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
+using Moq;
+using api.FriendsVersus.Dto;
+using System.Threading.Tasks;
 
 namespace FriendsVersusTests.Data_Tests
 {
@@ -52,38 +55,26 @@ namespace FriendsVersusTests.Data_Tests
         [TestMethod]
         public void TestUserCanBeCreated()
         {
-            using (SqliteConnection conn = new SqliteConnection(connectionString))
+            Mock<IConfiguration> mockConfig = new Mock<IConfiguration>();
+            mockConfig.SetupGet(config => config.GetSection("connectionStrings")["AppData"])
+                    .Returns("Data Source=D:/TestDBEnvironment/FriendsVersus/FriendsVersus.db");
+            UserData data = new UserData(mockConfig.Object);
+            data.CreateUserAsync(new UserCreationRequest()
             {
-                conn.Open();
-                SqliteCommand command = new SqliteCommand(UserQueries.insertUserQuery, conn);
-                command.Parameters.AddWithValue("$Username", "Jerry");
-                command.Parameters.AddWithValue("$Passwd", "Test2");
-                command.Parameters.AddWithValue("$Email", "Test3");
-                command.Parameters.AddWithValue("$DateJoined", "Test4");
-
-                var result = command.ExecuteScalar();
-                
-                conn.Close();
-            }
+                Username = "NewUser",
+                Password = "SuperSpecialNumber1Password",
+                Email = "SuperSpecialNumber1Email"
+            }, new System.Threading.CancellationToken());
         }
         [TestMethod]
-        public void TestUserCanBeGottenByUserId()
+        public async Task TestUserCanBeGottenByUserId()
         {
-            using (SqliteConnection conn = new SqliteConnection(connectionString))
-            {
-                conn.Open();
-                SqliteCommand command = new SqliteCommand(UserQueries.getUserByUserIdQuery, conn);
-                command.Parameters.AddWithValue("$UserId", 1);
+            Mock<IConfiguration> mockConfig = new Mock<IConfiguration>();
+            mockConfig.SetupGet(config => config.GetSection("connectionStrings")["AppData"])
+                    .Returns("Data Source=D:/TestDBEnvironment/FriendsVersus/FriendsVersus.db");
+            UserData data = new UserData(mockConfig.Object);
 
-                SqliteDataReader result = command.ExecuteReader();
-                if (result.Read())
-                {
-                    Assert.AreEqual(result.GetInt32(0), 1);
-                }
-                
-
-                conn.Close();
-            }
+            User user = await data.GetUserIfExists("NewUser");
         }
         [TestMethod]
         public void TestUserCanBeGottenByUserName()

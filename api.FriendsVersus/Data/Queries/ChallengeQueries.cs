@@ -14,6 +14,14 @@ namespace api.FriendsVersus.Data
             CREATE INDEX ix_ChallengerId
             ON Challenges(ChallengerId)
         ";
+        public const string setIndexByUserChallengedId = @"
+            CREATE INDEX ix_ChallengedId
+            ON Challenges(ChallengedId)
+        ";
+        public const string setIndexByAccepted = @"
+            CREATE INDEX ix_Accepted
+            ON Challenges(Accepted)
+        ";
 
         //Insert Challenge Query
         public const string insertChallengeQuery = @"
@@ -21,15 +29,11 @@ namespace api.FriendsVersus.Data
                 LeaderboardId,
                 ChallengerId,
                 ChallengedId,
-                ChallengerMMR,
-                ChallengedMMR,
                 Accepted
             } VALUES {
                 $LeaderboardId,
                 $ChallengerId,
                 $ChallengedId,
-                $ChallengerMMR,
-                $ChallengedMMR,
                 0
             }
         ";
@@ -53,6 +57,56 @@ namespace api.FriendsVersus.Data
                 Challenges
             WHERE
                 GameId = $GameId
+        ";
+        public const string selectFromChallengesByUserIsChallenger = @"
+            SELECT
+                GameId,
+                LeaderboardId,
+                ChallengerId,
+                ChallengedId,
+                Accepted
+            FROM
+                Challenges
+            WHERE
+                ChallengerId = $ChallengerId
+        ";
+        public const string selectFromChallengesByUserIsChallenged = @"
+            SELECT
+                GameId,
+                LeaderboardId,
+                ChallengerId,
+                ChallengedId,
+                Accepted
+            FROM
+                Challenges
+            WHERE
+                ChallengedId = $ChallengedId
+        ";
+        public const string selectFromChallengesByUserIdDidAccept = @"
+            SELECT
+                GameId,
+                LeaderboardId,
+                ChallengerId,
+                ChallengedId,
+                Accepted
+            FROM
+                Challenges
+            WHERE
+                ChallengedId = $ChallengedId,
+                Accepted = 1
+        ";
+        public const string selectFromChallengesByUserChallengedUser = @"
+            SELECT
+                GameId,
+                LeaderboardId,
+                ChallengerId,
+                ChallengedId,
+                Accepted
+            FROM
+                Challenges
+            WHERE
+                ChallengedId = $ChallengedId,
+                ChallengerId = $ChallengerId
         ";
     }
 }

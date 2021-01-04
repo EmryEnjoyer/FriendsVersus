@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,7 +18,8 @@ namespace api.FriendsVersus.Data
 
         public UserData(IConfiguration config)
         {
-            _connectionString = config.ThrowIfNull("Configuration").GetConnectionString("Appdata").ThrowIfNull("connectionString");
+            //_connectionString = config.ThrowIfNull("Configuration").GetConnectionString("Appdata").ThrowIfNull("connectionString");
+            _connectionString = config.GetSection("connectionStrings")["AppData"];
         }
 
         public Task<UserCreationResponse> AuthenticateCreationAsync(UserEmailAuthenticationRequest request, CancellationToken token)
@@ -26,17 +29,35 @@ namespace api.FriendsVersus.Data
 
         public Task<UserCreationResponse> CreateUserAsync(UserCreationRequest request, CancellationToken token)
         {
-            throw new NotImplementedException();
+            var sha256 = SHA256.Create();
+            byte[] data = Encoding.ASCII.GetBytes(request.Password);
+            var sha256Data = sha256.ComputeHash(data);
+            string hashed = Encoding.ASCII.GetString(sha256Data);
+            using(SqliteConnection conn = new SqliteConnection(_connectionString))
+            {
+                conn.Open();
+                SqliteCommand command = new SqliteCommand(UserQueries.insertUserQuery, conn);
+                command.Parameters.AddWithValue("$Username", request.Username);
+                command.Parameters.AddWithValue("$Passwd", hashed);
+                command.Parameters.AddWithValue("$DateJoined", (Int32) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+                command.Parameters.AddWithValue("$Email", request.Email);
+                command.ExecuteScalar();
+                conn.Close();
+                return Task.FromResult(new UserCreationResponse()
+                {
+                    RedirectUrl = "Friendsversus.net/" + Guid.NewGuid()
+                });
+            }
         }
 
-        public async Task<User> GetUserIfExists(IConfiguration _config, string? username = null, int? userId = null)
+        public async Task<User> GetUserIfExists(string? username = null, int? userId = null)
         {
 
             if (userId != null)
             {
                 try
                 {
-                    using (SqliteConnection conn = new SqliteConnection(_config.ThrowIfNull("configuration").GetConnectionString("Appdata").ThrowIfNull("connectionString")))
+                    using (SqliteConnection conn = new SqliteConnection(_connectionString))
                     {
                         conn.Open();
                         SqliteCommand command = new SqliteCommand(UserQueries.getUserByUserIdQuery, conn);
@@ -69,7 +90,7 @@ namespace api.FriendsVersus.Data
             {
                 try
                 {
-                    using (SqliteConnection conn = new SqliteConnection(_config.ThrowIfNull("configuration").GetConnectionString("Appdata").ThrowIfNull("connectionString")))
+                    using (SqliteConnection conn = new SqliteConnection(_connectionString))
                     {
                         conn.Open();
                         SqliteCommand command = new SqliteCommand(UserQueries.getUserByUsernameQuery, conn);

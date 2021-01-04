@@ -31,6 +31,6 @@ namespace api.FriendsVersus.Data
         /// <param name="username">Optional username</param>
         /// <param name="userId">Optional userid</param>
         /// <returns>User object</returns>
-        Task<User> GetUserIfExists(IConfiguration _config, string? username=null, int? userId=null);
+        Task<User> GetUserIfExists(string? username=null, int? userId=null);
     }
 }

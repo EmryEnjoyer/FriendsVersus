@@ -13,7 +13,7 @@ namespace api.FriendsVersus.Data
                 Username Text NOT NULL,
                 Passwd Text NOT NULL,
                 Email Text NOT NULL,
-                DateJoined Text NOT NULL,
+                DateJoined Integer NOT NULL,
                 Banned Integer NOT NULL,
                 IsAdmin Integer NOT NULL
             )
