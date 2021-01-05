@@ -15,7 +15,8 @@ namespace api.FriendsVersus.Data
                 Email Text NOT NULL,
                 DateJoined Integer NOT NULL,
                 Banned Integer NOT NULL,
-                IsAdmin Integer NOT NULL
+                IsAdmin Integer NOT NULL,
+                IsVerified Integer NOT NULL
             )
         ";
         public const string createGamesQuery = @"
@@ -78,7 +79,7 @@ namespace api.FriendsVersus.Data
                 UserId Integer NOT NULL PRIMARY KEY,
                 VerificationLink Text NOT NULL,
                 FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE ON UPDATE NO ACTION
-            )
+            ) WITHOUT ROWID
         ";
         public const string createLeaderboardInvitationTableQuery = @"
             CREATE TABLE IF NOT EXISTS LeaderboardInvites (

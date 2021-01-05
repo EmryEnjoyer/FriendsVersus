@@ -90,6 +90,48 @@ namespace api.FriendsVersus.Data
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
+            using (SqliteConnection conn = new SqliteConnection(_connectionString))
+            {
+                conn.Open();
+                SqliteCommand command = new SqliteCommand(UserQueries.createUsersUsernameIndex);
+                await command.ExecuteNonQueryAsync();
+                conn.Close();
+            }
+            using (SqliteConnection conn = new SqliteConnection(_connectionString))
+            {
+                conn.Open();
+                SqliteCommand command = new SqliteCommand(UserQueries.createUserVerificationIndexOnLink);
+                await command.ExecuteNonQueryAsync();
+                conn.Close();
+            }
+            using (SqliteConnection conn = new SqliteConnection(_connectionString))
+            {
+                conn.Open();
+                SqliteCommand command = new SqliteCommand(LeaderboardQueries.setLeaderboardNameAsIndexQuery);
+                await command.ExecuteNonQueryAsync();
+                conn.Close();
+            }
+            using (SqliteConnection conn = new SqliteConnection(_connectionString))
+            {
+                conn.Open();
+                SqliteCommand command = new SqliteCommand(ChallengeQueries.setIndexByAccepted);
+                await command.ExecuteNonQueryAsync();
+                conn.Close();
+            }
+            using (SqliteConnection conn = new SqliteConnection(_connectionString))
+            {
+                conn.Open();
+                SqliteCommand command = new SqliteCommand(ChallengeQueries.setIndexByUserChallengedId);
+                await command.ExecuteNonQueryAsync();
+                conn.Close();
+            }
+            using (SqliteConnection conn = new SqliteConnection(_connectionString))
+            {
+                conn.Open();
+                SqliteCommand command = new SqliteCommand(ChallengeQueries.setIndexByUserChallengerId);
+                await command.ExecuteNonQueryAsync();
+                conn.Close();
+            }
         }
     }
 }

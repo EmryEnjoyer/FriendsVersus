@@ -9,9 +9,14 @@ namespace api.FriendsVersus.Data
     {
 
         public const string createUsersUsernameIndex = @"
-            CREATE UNIQUE INDEX IF NOT EXISTS ix_usernames
+            CREATE UNIQUE INDEX IF NOT EXISTS uix_usernames
             ON Users(Username)
         ";
+        public const string createUserVerificationIndexOnLink = @"
+            CREATE UNIQUE INDEX IF NOT EXISTS uix_verificationLinks
+            ON UserVerificationLinks(VerificationLink)
+        ";
+
         public const string getUserByUsernameQuery = @"
             SELECT
                 UserId,
@@ -36,6 +41,14 @@ namespace api.FriendsVersus.Data
                 Users
             WHERE
                 UserId = $UserId
+        ";
+        public const string getUserIdByUsernameQuery = @"
+            SELECT
+                UserId
+            FROM
+                Users
+            WHERE
+                Username = $Username
         ";
         public const string getPasswordByUserIdQuery = @"
             SELECT
@@ -111,7 +124,7 @@ namespace api.FriendsVersus.Data
         public const string deleteUserQuery = @"DELETE FROM Users WHERE UserId = $UserId";
 
         /*
-         Authentication queries
+         Authorization queries
          */
         public const string authorizeUserQuery = @"
             INSERT INTO Tokens (
@@ -123,9 +136,24 @@ namespace api.FriendsVersus.Data
             )
         ";
 
-        public const string DeauthorizeUserQuery = @"
+        public const string deauthorizeUserQuery = @"
             DELETE FROM Tokens WHERE UserId = $UserId
         ";
+        /*
+         User Creation Verification
+        */
+        public const string createUserVerificationLinkQuery = @"
+            INSERT INTO UserVerificationLinks (
+                UserId,
+                VerificationLink
+            ) VALUES (
+                $UserId,
+                $VerificationLink
+            )
+        ";
 
+        public const string getUserIdFromVerificationLink = @"
+            SELECT UserId FROM UserVerificationLinks WHERE VerificationLink=$VerificationLink
+        ";
     }
 }

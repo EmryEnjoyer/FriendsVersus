@@ -18,16 +18,13 @@ namespace api.FriendsVersus.Data
 
         public UserData(IConfiguration config)
         {
-            //_connectionString = config.ThrowIfNull("Configuration").GetConnectionString("Appdata").ThrowIfNull("connectionString");
-            _connectionString = config.GetSection("connectionStrings")["AppData"];
+            _connectionString = config.ThrowIfNull("Configuration").GetConnectionString("Appdata").ThrowIfNull("connectionString");
+            //_connectionString = config.GetSection("connectionStrings")["AppData"];
         }
 
-        public Task<UserCreationResponse> AuthenticateCreationAsync(UserEmailAuthenticationRequest request, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<UserCreationResponse> CreateUserAsync(UserCreationRequest request, CancellationToken token)
+
+        public async Task<UserCreationResponse> CreateUserAsync(UserCreationRequest request, CancellationToken token)
         {
             var sha256 = SHA256.Create();
             byte[] data = Encoding.ASCII.GetBytes(request.Password);
@@ -43,11 +40,24 @@ namespace api.FriendsVersus.Data
                 command.Parameters.AddWithValue("$Email", request.Email);
                 command.ExecuteScalar();
                 conn.Close();
-                return Task.FromResult(new UserCreationResponse()
+
+                string inviteId = Guid.NewGuid().ToString();
+                UserCreationResponse response = new UserCreationResponse()
                 {
-                    RedirectUrl = "Friendsversus.net/" + Guid.NewGuid()
-                });
+                    RedirectUrl = $"Friendsversus.net/invites/{inviteId}"
+                };
+                int userId = await GetUserIdFromUsernameAsync(request.Username);
+
+                await WriteUserInvitationLinkToLinkTableAsync(userId, inviteId);
+
+                return response;
+
             }
+        }
+
+        public Task<TokenResponse> AuthenticateCreationAsync(UserEmailAuthenticationRequest request, CancellationToken token)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<User> GetUserIfExists(string? username = null, int? userId = null)
@@ -123,5 +133,34 @@ namespace api.FriendsVersus.Data
 
         }
 
+        public async Task<int> GetUserIdFromUsernameAsync(string username)
+        {
+            using(SqliteConnection conn = new SqliteConnection(_connectionString))
+            {
+                conn.Open();
+                SqliteCommand command = new SqliteCommand(UserQueries.getUserIdByUsernameQuery, conn);
+                command.Parameters.AddWithValue("$Username", username);
+                SqliteDataReader reader = await command.ExecuteReaderAsync();
+                conn.Close();
+
+                reader.Read();
+                return reader.GetInt32(0);
+                
+            }
+        }
+
+        private async Task WriteUserInvitationLinkToLinkTableAsync(int userId, string inviteId)
+        {
+            using(SqliteConnection conn = new SqliteConnection(_connectionString))
+            {
+                conn.Open();
+                SqliteCommand command = new SqliteCommand(UserQueries.createUserVerificationLinkQuery, conn);
+                command.Parameters.AddWithValue("$UserId", userId);
+                command.Parameters.AddWithValue("$VerificationLink", inviteId);
+                await command.ExecuteScalarAsync();
+                conn.Close();
+            }
+        }
+        
     }
 }
