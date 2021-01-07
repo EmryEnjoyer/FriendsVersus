@@ -37,6 +37,10 @@ namespace FriendsVersusTests.Data_Tests
                 SqliteCommand command = new SqliteCommand(SchemaQueries.createUsersQuery, conn);
                 command.ExecuteScalar();
                 conn.Close();
+                conn.Open();
+                SqliteCommand command2 = new SqliteCommand(SchemaQueries.createUserVerificationLinkTableQuery, conn);
+                command2.ExecuteScalar();
+                conn.Close();
             }
         }
 
@@ -53,13 +57,13 @@ namespace FriendsVersusTests.Data_Tests
         }
 
         [TestMethod]
-        public void TestUserCanBeCreated()
+        public async Task TestUserCanBeCreated()
         {
             Mock<IConfiguration> mockConfig = new Mock<IConfiguration>();
             mockConfig.SetupGet(config => config.GetSection("connectionStrings")["AppData"])
                     .Returns("Data Source=D:/TestDBEnvironment/FriendsVersus/FriendsVersus.db");
             UserData data = new UserData(mockConfig.Object);
-            data.CreateUserAsync(new UserCreationRequest()
+            await data.CreateUserAsync(new UserCreationRequest()
             {
                 Username = "NewUser",
                 Password = "SuperSpecialNumber1Password",
@@ -113,7 +117,7 @@ namespace FriendsVersusTests.Data_Tests
             {
                 conn.Open();
                 SqliteCommand command = new SqliteCommand(UserQueries.getPasswordByUsernameQuery, conn);
-                command.Parameters.AddWithValue("$Username", "Test6");
+                command.Parameters.AddWithValue("$Username", "NewUser");
 
                 SqliteDataReader result = command.ExecuteReader();
                 Assert.AreEqual(result.FieldCount, 1);

@@ -1,4 +1,5 @@
-﻿using api.FriendsVersus.Dto;
+﻿using api.FriendsVersus.Auth;
+using api.FriendsVersus.Dto;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,16 @@ namespace api.FriendsVersus.Data
         /// <param name="username">Optional username</param>
         /// <param name="userId">Optional userid</param>
         /// <returns>User object</returns>
-        Task<User> GetUserIfExists(string? username=null, int? userId=null);
+        Task<User> GetUserIfExists(string username);
+        Task<User> GetUserIfExists(int userId);
+        /// <summary>
+        /// Authenticate a user
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <returns></returns>
+        Task<TokenResponse> AuthenticateUser(UserLoginRequest request, ITokenManager tokenManager);
+
+
         Task<int> GetUserIdFromUsernameAsync(string Username);
     }
 }

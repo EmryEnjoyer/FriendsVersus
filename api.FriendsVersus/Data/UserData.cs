@@ -1,4 +1,5 @@
-﻿using api.FriendsVersus.Dto;
+﻿using api.FriendsVersus.Auth;
+using api.FriendsVersus.Dto;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -18,18 +19,15 @@ namespace api.FriendsVersus.Data
 
         public UserData(IConfiguration config)
         {
-            _connectionString = config.ThrowIfNull("Configuration").GetConnectionString("Appdata").ThrowIfNull("connectionString");
-            //_connectionString = config.GetSection("connectionStrings")["AppData"];
+            //_connectionString = config.ThrowIfNull("Configuration").GetConnectionString("Appdata").ThrowIfNull("connectionString");
+            _connectionString = config.GetSection("connectionStrings")["AppData"];
         }
 
 
 
         public async Task<UserCreationResponse> CreateUserAsync(UserCreationRequest request, CancellationToken token)
         {
-            var sha256 = SHA256.Create();
-            byte[] data = Encoding.ASCII.GetBytes(request.Password);
-            var sha256Data = sha256.ComputeHash(data);
-            string hashed = Encoding.ASCII.GetString(sha256Data);
+            string hashed = request.Password.hashString();
             using(SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
@@ -60,11 +58,10 @@ namespace api.FriendsVersus.Data
             throw new NotImplementedException();
         }
 
-        public async Task<User> GetUserIfExists(string? username = null, int? userId = null)
+        public async Task<User> GetUserIfExists(int userId)
         {
 
-            if (userId != null)
-            {
+            
                 try
                 {
                     using (SqliteConnection conn = new SqliteConnection(_connectionString))
@@ -73,7 +70,7 @@ namespace api.FriendsVersus.Data
                         SqliteCommand command = new SqliteCommand(UserQueries.getUserByUserIdQuery, conn);
                         command.Parameters.AddWithValue("$UserId", userId);
 
-                        SqliteDataReader results = command.ExecuteReader();
+                        SqliteDataReader results = await command.ExecuteReaderAsync();
                         results.Read();
                         if (results.FieldCount > 0)
                         {
@@ -95,44 +92,46 @@ namespace api.FriendsVersus.Data
                 {
                     return null;
                 }
-            }
-            if(username != null)
-            {
-                try
-                {
-                    using (SqliteConnection conn = new SqliteConnection(_connectionString))
-                    {
-                        conn.Open();
-                        SqliteCommand command = new SqliteCommand(UserQueries.getUserByUsernameQuery, conn);
-                        command.Parameters.AddWithValue("$Username", username);
-
-                        SqliteDataReader results = command.ExecuteReader();
-                        results.Read();
-                        if (results.FieldCount > 0)
-                        {
-                            return new User
-                            {
-                                UserId = results.GetInt32(0),
-                                Username = results.GetString(1),
-                                Email = results.GetString(2),
-                                DateJoined = results.GetString(3),
-                                Banned = results.GetInt32(4),
-                                IsAdmin = results.GetInt32(5)
-                            };
-                        }
-
-                        conn.Close();
-                    }
-                }
-                catch (SqliteException e)
-                {
-                    return null;
-                }
-            }
+            
             return null;
 
         }
 
+        public async Task<User> GetUserIfExists(string username)
+        {
+            try
+            {
+                using (SqliteConnection conn = new SqliteConnection(_connectionString))
+                {
+                    conn.Open();
+                    SqliteCommand command = new SqliteCommand(UserQueries.getUserByUsernameQuery, conn);
+                    command.Parameters.AddWithValue("$Username", username);
+
+                    SqliteDataReader results = await command.ExecuteReaderAsync();
+                    results.Read();
+                    if (results.FieldCount > 0)
+                    {
+                        return new User
+                        {
+                            UserId = results.GetInt32(0),
+                            Username = results.GetString(1),
+                            Email = results.GetString(2),
+                            DateJoined = results.GetString(3),
+                            Banned = results.GetInt32(4),
+                            IsAdmin = results.GetInt32(5)
+                        };
+                    }
+
+                    conn.Close();
+                }
+            }
+            catch (SqliteException e)
+            {
+                return null;
+            }
+            return null;
+            
+        }
         public async Task<int> GetUserIdFromUsernameAsync(string username)
         {
             using(SqliteConnection conn = new SqliteConnection(_connectionString))
@@ -141,10 +140,12 @@ namespace api.FriendsVersus.Data
                 SqliteCommand command = new SqliteCommand(UserQueries.getUserIdByUsernameQuery, conn);
                 command.Parameters.AddWithValue("$Username", username);
                 SqliteDataReader reader = await command.ExecuteReaderAsync();
+                reader.Read();
+                var id = reader.GetInt32(0);
                 conn.Close();
 
-                reader.Read();
-                return reader.GetInt32(0);
+
+                return id;
                 
             }
         }
@@ -161,6 +162,27 @@ namespace api.FriendsVersus.Data
                 conn.Close();
             }
         }
-        
+
+        public async Task<TokenResponse> AuthenticateUser(UserLoginRequest request, ITokenManager tokenManager)
+        {
+            var hashedPassword = request.Password.hashString();
+            using(SqliteConnection conn = new SqliteConnection(_connectionString))
+            {
+                conn.Open();
+                SqliteCommand command = new SqliteCommand(UserQueries.getPasswordByUsernameQuery, conn);
+                command.Parameters.AddWithValue("$Username", request.Username);
+                var reader = await command.ExecuteReaderAsync();
+                await reader.ReadAsync();
+                var pass = reader.GetString(0);
+                if (pass == hashedPassword)
+                {
+                    return new TokenResponse()
+                    {
+                        Token = await tokenManager.GrantToken(request.Username)
+                    };
+                }
+                throw new UnauthorizedAccessException();
+             }
+        }
     }
 }

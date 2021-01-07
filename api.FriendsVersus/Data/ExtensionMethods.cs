@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace api.FriendsVersus.Data
@@ -22,5 +24,13 @@ namespace api.FriendsVersus.Data
             return false;
         }
         */
+
+        public static string hashString(this string instance)
+        {
+            var sha256 = SHA256.Create();
+            byte[] data = Encoding.ASCII.GetBytes(instance);
+            var sha256Data = sha256.ComputeHash(data);
+            return Encoding.ASCII.GetString(sha256Data);
+        }
     }
 }

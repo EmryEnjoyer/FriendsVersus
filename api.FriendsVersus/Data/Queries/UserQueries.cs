@@ -71,12 +71,14 @@ namespace api.FriendsVersus.Data
                 Email,
                 DateJoined,
                 Banned,
-                IsAdmin
+                IsAdmin,
+                IsVerified
             ) VALUES (
                 $Username,
                 $Passwd,
                 $Email,
                 $DateJoined,
+                0,
                 0,
                 0
             )";

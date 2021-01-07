@@ -19,7 +19,7 @@ namespace FriendsVersusTests.AuthTests
         public async Task TestCanTokenBeCreated()
         {
             Mock<IUserData> mockUserData = new Mock<IUserData>();
-            mockUserData.Setup(userData => userData.GetUserIfExists(It.IsAny<string>(), It.IsAny<int?>())).Returns(Task.FromResult(new User
+            mockUserData.Setup(userData => userData.GetUserIfExists(It.IsAny<string>())).Returns(Task.FromResult(new User
             {
                 Username = "Superspecialnumber1user",
                 Email = "SomeEmailAddress",

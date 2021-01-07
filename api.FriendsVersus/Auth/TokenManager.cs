@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace api.FriendsVersus.Auth
 {
-    public class TokenManager
+    public class TokenManager : ITokenManager
     {
         public IConfiguration _config;
         public IUserData _accessLayer;
@@ -29,16 +29,10 @@ namespace api.FriendsVersus.Auth
         /// <param name="username">Username to get user (Must be unique)</param>
         /// <param name="userId">UserId to get user (Must be unique</param>
         /// <returns>New JSON Token</returns>
-        public async Task<string> GrantToken(string? username=null, int? userId=null)
+        public async Task<string> GrantToken(string username)
         {
             User user;
-            if (username != null)
-            {
-                user = await (_accessLayer.GetUserIfExists(username));
-            } else
-            {
-                user = await (_accessLayer.GetUserIfExists(null, userId));
-            }
+            user = await (_accessLayer.GetUserIfExists(username));
             
             if (user != null)
             {
@@ -47,6 +41,22 @@ namespace api.FriendsVersus.Auth
             return null;
         }
 
+        public async Task<string> GrantToken(int userId)
+        {
+            User user;
+            user = await (_accessLayer.GetUserIfExists(userId));
+
+            if (user != null)
+            {
+                return GenerateJSONToken(user, _config);
+            }
+            return null;
+        }
+        /*
+          else
+            {
+                user = await (_accessLayer.GetUserIfExists(null, userId));
+            }*/
         /// <summary>
         /// Constructs a new JWT Token from the User information
         /// </summary>
