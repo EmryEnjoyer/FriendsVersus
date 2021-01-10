@@ -53,9 +53,29 @@ namespace api.FriendsVersus.Data
             }
         }
 
-        public Task<TokenResponse> AuthenticateCreationAsync(UserEmailAuthenticationRequest request, CancellationToken token)
+        public async Task<TokenResponse> AuthenticateCreationAsync(UserEmailAuthenticationRequest request, ITokenManager tokenManager, CancellationToken token)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using(SqliteConnection conn = new SqliteConnection(_connectionString))
+                {
+                    await conn.OpenAsync();
+                    SqliteCommand command = new SqliteCommand(UserQueries.getUserIdFromVerificationLink, conn);
+                    command.Parameters.AddWithValue("$VerificationLink", request.InviteUrl);
+                    var reader = await command.ExecuteReaderAsync();
+                    await reader.ReadAsync();
+                    if(await GetUserIfExists(reader.GetInt32(0)) != null)
+                    {
+                        return new TokenResponse(){
+                            Token = await tokenManager.GrantToken(reader.GetInt32(0))
+                        };
+                    }
+                    return null;
+                }
+            } catch(SqliteException e)
+            {
+                return null;
+            }
         }
 
         public async Task<User> GetUserIfExists(int userId)
@@ -163,7 +183,7 @@ namespace api.FriendsVersus.Data
             }
         }
 
-        public async Task<TokenResponse> AuthenticateUser(UserLoginRequest request, ITokenManager tokenManager)
+        public async Task<TokenResponse> AuthenticateUserAsync(UserLoginRequest request, ITokenManager tokenManager, CancellationToken token)
         {
             var hashedPassword = request.Password.hashString();
             using(SqliteConnection conn = new SqliteConnection(_connectionString))

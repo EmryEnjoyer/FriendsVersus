@@ -23,7 +23,7 @@ namespace api.FriendsVersus.Data
             using(SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
-                SqliteCommand command = new SqliteCommand(SchemaQueries.createUsersQuery);
+                SqliteCommand command = new SqliteCommand(SchemaQueries.createUsersQuery, conn);
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
@@ -31,7 +31,7 @@ namespace api.FriendsVersus.Data
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
-                SqliteCommand command = new SqliteCommand(SchemaQueries.createLeaderboardsQuery);
+                SqliteCommand command = new SqliteCommand(SchemaQueries.createLeaderboardsQuery, conn);
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
@@ -39,7 +39,7 @@ namespace api.FriendsVersus.Data
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
-                SqliteCommand command = new SqliteCommand(SchemaQueries.createChallengesQuery);
+                SqliteCommand command = new SqliteCommand(SchemaQueries.createChallengesQuery, conn);
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
@@ -47,7 +47,7 @@ namespace api.FriendsVersus.Data
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
-                SqliteCommand command = new SqliteCommand(SchemaQueries.createGamesQuery);
+                SqliteCommand command = new SqliteCommand(SchemaQueries.createGamesQuery, conn);
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
@@ -55,7 +55,7 @@ namespace api.FriendsVersus.Data
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
-                SqliteCommand command = new SqliteCommand(SchemaQueries.createUserLeaderboardInteractionsQuery);
+                SqliteCommand command = new SqliteCommand(SchemaQueries.createUserLeaderboardInteractionsQuery, conn);
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
@@ -63,7 +63,7 @@ namespace api.FriendsVersus.Data
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
-                SqliteCommand command = new SqliteCommand(SchemaQueries.createUserMmrTableQuery);
+                SqliteCommand command = new SqliteCommand(SchemaQueries.createUserMmrTableQuery, conn);
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
@@ -71,7 +71,7 @@ namespace api.FriendsVersus.Data
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
-                SqliteCommand command = new SqliteCommand(SchemaQueries.createUserVerificationLinkTableQuery);
+                SqliteCommand command = new SqliteCommand(SchemaQueries.createUserVerificationLinkTableQuery, conn);
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
@@ -79,59 +79,74 @@ namespace api.FriendsVersus.Data
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
-                SqliteCommand command = new SqliteCommand(SchemaQueries.createLeaderboardInvitationTableQuery);
+                SqliteCommand command = new SqliteCommand(SchemaQueries.createLeaderboardInvitationTableQuery, conn);
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
-                SqliteCommand command = new SqliteCommand(SchemaQueries.createUserAuthenticationTokenTableQuery);
+                SqliteCommand command = new SqliteCommand(SchemaQueries.createUserAuthenticationTokenTableQuery, conn);
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
-                SqliteCommand command = new SqliteCommand(UserQueries.createUsersUsernameIndex);
+                SqliteCommand command = new SqliteCommand(UserQueries.createUsersUsernameIndex, conn);
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
-                SqliteCommand command = new SqliteCommand(UserQueries.createUserVerificationIndexOnLink);
+                SqliteCommand command = new SqliteCommand(UserQueries.createUserVerificationIndexOnLink, conn);
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
-                SqliteCommand command = new SqliteCommand(LeaderboardQueries.setLeaderboardNameAsIndexQuery);
+                SqliteCommand command = new SqliteCommand(LeaderboardQueries.setLeaderboardNameAsIndexQuery, conn);
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
-                SqliteCommand command = new SqliteCommand(ChallengeQueries.setIndexByAccepted);
+                SqliteCommand command = new SqliteCommand(ChallengeQueries.setIndexByAccepted, conn);
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
-                SqliteCommand command = new SqliteCommand(ChallengeQueries.setIndexByUserChallengedId);
+                SqliteCommand command = new SqliteCommand(ChallengeQueries.setIndexByUserChallengedId, conn);
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
-                SqliteCommand command = new SqliteCommand(ChallengeQueries.setIndexByUserChallengerId);
+                SqliteCommand command = new SqliteCommand(ChallengeQueries.setIndexByUserChallengerId, conn);
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
+            using (SqliteConnection conn = new SqliteConnection(_connectionString))
+            {
+                conn.Open();
+                SqliteCommand command = new SqliteCommand(UserQueries.createUsersUsernameIndex, conn);
+                await command.ExecuteNonQueryAsync();
+                conn.Close();
+            }
+            using (SqliteConnection conn = new SqliteConnection(_connectionString))
+            {
+                conn.Open();
+                SqliteCommand command = new SqliteCommand(UserQueries.createUserVerificationIndexOnLink, conn);
+                await command.ExecuteNonQueryAsync();
+                conn.Close();
+            }
+
         }
     }
 }

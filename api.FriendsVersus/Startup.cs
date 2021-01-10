@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using api.FriendsVersus.Auth;
 using api.FriendsVersus.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -34,6 +35,10 @@ namespace api.FriendsVersus
             services.AddControllers();
             services.AddMvc();
 
+            // Dependency Injection
+            services.AddTransient<IUserData, UserData>();
+            services.AddTransient<ITokenManager, TokenManager>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api.FriendsVersus.net", Version = "v1" });
@@ -52,6 +57,7 @@ namespace api.FriendsVersus
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                     };
                 });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -122,6 +122,14 @@ namespace api.FriendsVersus.Data
             WHERE
                 UserId = $UserId
         ";
+        public const string updateUserIsVerifiedQuery = @"
+            UPDATE
+                Users
+            SET
+                IsVerified = CASE IsVerified WHEN 0 THEN 1 ELSE 0 END
+            WHERE
+                UserId = $UserId
+        ";
 
         public const string deleteUserQuery = @"DELETE FROM Users WHERE UserId = $UserId";
 

@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using api.FriendsVersus.Auth;
+using api.FriendsVersus.Data;
 using api.FriendsVersus.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace api.FriendsVersus.Controllers
 {
@@ -15,19 +18,30 @@ namespace api.FriendsVersus.Controllers
     [Authorize]
     public class UserController : APIController
     {
+        public IConfiguration _config;
+        public IUserData accessLayer;
+        public ITokenManager _tokenManager;
+        public UserController(IConfiguration config, IUserData accessLayer, ITokenManager tokenManager)
+        {
+            _config = config;
+            _tokenManager = tokenManager;
+            this.accessLayer = accessLayer;
+        }
         /// <summary>
         /// Handles request to create user
         /// </summary>
         [HttpPost("create")]
+        [AllowAnonymous]
         public async Task<UserCreationResponse> createUser([FromBody] UserCreationRequest request, CancellationToken token) {
-            throw new NotImplementedException();
+            return await accessLayer.CreateUserAsync(request, token);
         }
         /// <summary>
         /// Handles request to authenticate user creation
         /// </summary>
         [HttpPut("{authToken}/authuser")]
+        [AllowAnonymous]
         public async Task<TokenResponse> authenticateCreation([FromBody] UserEmailAuthenticationRequest request, CancellationToken token) {
-        throw new NotImplementedException();
+            return await accessLayer.AuthenticateCreationAsync(request, _tokenManager, token);
         }
         /// <summary>
         /// Handles request to update username

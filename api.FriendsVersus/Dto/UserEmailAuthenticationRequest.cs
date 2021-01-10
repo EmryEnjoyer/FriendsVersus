@@ -8,6 +8,5 @@ namespace api.FriendsVersus.Dto
     public class UserEmailAuthenticationRequest
     {
         public string InviteUrl { get; set; }
-        public string Password { get; set; }
     }
 }

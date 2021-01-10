@@ -24,7 +24,7 @@ namespace api.FriendsVersus.Data
         /// <param name="request">The request for user authentication</param>
         /// <param name="token">Cancellation Token</param>
         /// <returns>Completed user creation</returns>
-        Task<TokenResponse> AuthenticateCreationAsync(UserEmailAuthenticationRequest request, CancellationToken token);
+        Task<TokenResponse> AuthenticateCreationAsync(UserEmailAuthenticationRequest request, ITokenManager tokenManager, CancellationToken token);
         /// <summary>
         /// Gets a user if one exists from the Users table
         /// </summary>
@@ -39,7 +39,7 @@ namespace api.FriendsVersus.Data
         /// </summary>
         /// <param name="Username"></param>
         /// <returns></returns>
-        Task<TokenResponse> AuthenticateUser(UserLoginRequest request, ITokenManager tokenManager);
+        Task<TokenResponse> AuthenticateUserAsync(UserLoginRequest request, ITokenManager tokenManager, CancellationToken token);
 
 
         Task<int> GetUserIdFromUsernameAsync(string Username);
