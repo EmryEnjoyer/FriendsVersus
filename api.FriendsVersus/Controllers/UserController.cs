@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using api.FriendsVersus.Auth;
 using api.FriendsVersus.Data;
 using api.FriendsVersus.Dto;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +16,7 @@ namespace api.FriendsVersus.Controllers
 {
     [Route("api/User")]
     [ApiController]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UserController : APIController
     {
         public IConfiguration _config;
