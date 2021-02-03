@@ -9,6 +9,7 @@ namespace api.FriendsVersus.Auth
     {
         Task<string> GrantToken(string username);
         Task<string> GrantToken(int userId);
-
+        Task<string> GetUserIdByTokenAsync(string token);
+        Task RevokeToken(string token);
     }
 }

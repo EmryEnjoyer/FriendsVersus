@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using api.FriendsVersus.Auth;
 using api.FriendsVersus.Data;
 using api.FriendsVersus.Dto;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,13 +16,13 @@ namespace api.FriendsVersus.Controllers
 {
     [Route("api/login")]
     [ApiController]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class LoginController : APIController
     {
         IConfiguration _config;
         IUserData _accessLayer;
         ITokenManager _tokenManager;
-        public LoginController(IConfiguration config, IUserData accessLayer, ITokenManager tokenManager)
+        public LoginController(ITokenManager tokenManager, IConfiguration config, IUserData accessLayer) : base(tokenManager)
         {
             _config = config;
             _accessLayer = accessLayer;
@@ -46,8 +47,9 @@ namespace api.FriendsVersus.Controllers
             throw new NotImplementedException();
         }
         [HttpPost("revoketoken")]
-        public async Task revokeToken(CancellationToken token) { 
-        
+        public async Task revokeToken([FromHeader(Name = "Authorization")] string accessToken, CancellationToken token) {
+            if (await GetTokenIsRevoked())
+                await _tokenManager.RevokeToken(accessToken.Replace("Bearer ", ""));
         }
     }
 }

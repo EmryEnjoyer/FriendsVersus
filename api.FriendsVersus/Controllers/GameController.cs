@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using api.FriendsVersus.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ namespace api.FriendsVersus.Controllers
     [Authorize]
     public class GameController : APIController
     {
+        public GameController(ITokenManager tokenManager) : base(tokenManager) { }
         [HttpPost("create")]
         public async Task createGame(CancellationToken token) {
             throw new NotImplementedException();

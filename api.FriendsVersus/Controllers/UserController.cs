@@ -22,7 +22,7 @@ namespace api.FriendsVersus.Controllers
         public IConfiguration _config;
         public IUserData accessLayer;
         public ITokenManager _tokenManager;
-        public UserController(IConfiguration config, IUserData accessLayer, ITokenManager tokenManager)
+        public UserController(ITokenManager tokenManager, IConfiguration config, IUserData accessLayer) : base(tokenManager)
         {
             _config = config;
             _tokenManager = tokenManager;
@@ -39,9 +39,13 @@ namespace api.FriendsVersus.Controllers
         /// <summary>
         /// Handles request to authenticate user creation
         /// </summary>
-        [HttpPut("{authToken}/authuser")]
+        [HttpPut("Verify/{inviteLink}")]
         [AllowAnonymous]
-        public async Task<TokenResponse> authenticateCreation([FromBody] UserEmailAuthenticationRequest request, CancellationToken token) {
+        public async Task<TokenResponse> authenticateCreation([FromRoute] string inviteLink, CancellationToken token) {
+            UserEmailAuthenticationRequest request = new UserEmailAuthenticationRequest()
+            {
+                InviteUrl = inviteLink
+            };
             return await accessLayer.AuthenticateCreationAsync(request, _tokenManager, token);
         }
         /// <summary>
@@ -70,7 +74,7 @@ namespace api.FriendsVersus.Controllers
         /// </summary>
         [HttpGet("{userId}/get")]
         public async Task<User> getUser([FromRoute] int userId, CancellationToken token) {
-            throw new NotImplementedException();
+            return await accessLayer.GetUserIfExists(userId);
         }
         /// <summary>
         /// Handles request to update user email

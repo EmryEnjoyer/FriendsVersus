@@ -36,5 +36,20 @@ namespace FriendsVersusTests.AuthTests
             Assert.IsNotNull(token);
 
         }
+        [TestMethod]
+        public async Task TestCanTokenBeGottenAsync()
+        {
+            string Token = "";
+            Mock<IUserData> mockUserData = new Mock<IUserData>();
+            Mock<IConfiguration> mockConfiguration = new Mock<IConfiguration>();
+            mockConfiguration.Setup(config => config["Jwt:Issuer"]).Returns("anyText");
+            mockConfiguration.Setup(config => config["Jwt:Key"]).Returns("anyText2ElectricBoogaloo");
+            mockConfiguration.SetupGet(config => config.GetSection("connectionStrings")["AppData"])
+                    .Returns("Data Source=D:/TestDBEnvironment/FriendsVersus/FriendsVersus.db");
+
+            TokenManager manager = new TokenManager(mockConfiguration.Object, mockUserData.Object);
+            string token = await manager.GetUserIdByTokenAsync(Token);
+            
+        }
     }
 }

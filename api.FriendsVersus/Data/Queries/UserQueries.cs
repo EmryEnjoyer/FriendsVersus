@@ -13,7 +13,7 @@ namespace api.FriendsVersus.Data
             ON Users(Username)
         ";
         public const string createUserVerificationIndexOnLink = @"
-            CREATE UNIQUE INDEX IF NOT EXISTS uix_verificationLinks
+            CREATE INDEX IF NOT EXISTS uix_verificationLinks
             ON UserVerificationLinks(VerificationLink)
         ";
 
@@ -145,9 +145,11 @@ namespace api.FriendsVersus.Data
                 $Token
             )
         ";
-
+        public const string getUserIsAuthenticatedQuery = @"
+            SELECT UserId FROM Tokens WHERE Token = $Token
+        ";
         public const string deauthorizeUserQuery = @"
-            DELETE FROM Tokens WHERE UserId = $UserId
+            DELETE FROM Tokens WHERE Token = $Token
         ";
         /*
          User Creation Verification

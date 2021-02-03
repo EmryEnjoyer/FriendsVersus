@@ -17,10 +17,13 @@ namespace api.FriendsVersus.Auth
     {
         public IConfiguration _config;
         public IUserData _accessLayer;
+        public readonly string connectionString;
         public TokenManager(IConfiguration config, IUserData access)
         {
             _config = config;
             _accessLayer = access;
+            connectionString = config.GetSection("connectionStrings")["AppData"];
+            //connectionString = config.ThrowIfNull("Configuration").GetConnectionString("Appdata").ThrowIfNull("connectionString");
         }
 
         /// <summary>
@@ -34,10 +37,25 @@ namespace api.FriendsVersus.Auth
             User user;
             user = await (_accessLayer.GetUserIfExists(username));
             
+            
+            
             if (user != null)
             {
-                return GenerateJSONToken(user, _config);
+                var token = GenerateJSONToken(user, _config);
+                var hashToken = token.hashString();
+                using (SqliteConnection connection = new SqliteConnection(connectionString))
+                {
+                    connection.Open();
+                    SqliteCommand command = new SqliteCommand(UserQueries.authorizeUserQuery, connection);
+                    command.Parameters.AddWithValue("$UserId", user.UserId);
+                    command.Parameters.AddWithValue("$Token", hashToken);
+
+                    await command.ExecuteScalarAsync();
+                    connection.Close();
+                }
+                return token;
             }
+            
             return null;
         }
 
@@ -48,9 +66,62 @@ namespace api.FriendsVersus.Auth
 
             if (user != null)
             {
-                return GenerateJSONToken(user, _config);
+                var token = GenerateJSONToken(user, _config);
+                var hashToken = token.hashString();
+                using (SqliteConnection connection = new SqliteConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+                    SqliteCommand command = new SqliteCommand(UserQueries.authorizeUserQuery, connection);
+                    command.Parameters.AddWithValue("$UserId", user.UserId);
+                    command.Parameters.AddWithValue("$Token", hashToken);
+
+                    await command.ExecuteScalarAsync();
+                    await connection.CloseAsync();
+                }
+                return token;
             }
             return null;
+        }
+
+        public async Task RevokeToken(string token)
+        {
+            using(SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                await connection.OpenAsync();
+                SqliteCommand command = new SqliteCommand(UserQueries.deauthorizeUserQuery, connection);
+                command.Parameters.AddWithValue("$Token", token.hashString());
+
+                await command.ExecuteScalarAsync();
+
+                await connection.CloseAsync();
+            }
+        }
+        public async Task<string> GetUserIdByTokenAsync(string token)
+        {
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                await connection.OpenAsync();
+                SqliteCommand command = new SqliteCommand(UserQueries.getUserIsAuthenticatedQuery, connection);
+                command.Parameters.AddWithValue("$Token", token.hashString());
+
+                SqliteDataReader reader = await command.ExecuteReaderAsync();
+
+                await reader.ReadAsync();
+                try
+                {
+                    if (await reader.IsDBNullAsync(0))
+                    {
+                        return null;
+                    }
+                    string result = reader.GetString(0);
+                    await connection.CloseAsync();
+                    return result;
+                } catch(InvalidOperationException e)
+                {
+                    return null;
+                }
+                
+            }
         }
         /*
           else
@@ -83,5 +154,6 @@ namespace api.FriendsVersus.Auth
                 signingCredentials: credentials);
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
     }
 }

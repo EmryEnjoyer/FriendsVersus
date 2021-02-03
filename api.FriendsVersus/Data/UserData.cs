@@ -19,8 +19,8 @@ namespace api.FriendsVersus.Data
 
         public UserData(IConfiguration config)
         {
-            //_connectionString = config.ThrowIfNull("Configuration").GetConnectionString("Appdata").ThrowIfNull("connectionString");
-            _connectionString = config.GetSection("connectionStrings")["AppData"];
+            _connectionString = config.ThrowIfNull("Configuration").GetConnectionString("Appdata").ThrowIfNull("connectionString");
+            //_connectionString = config.GetSection("connectionStrings")["AppData"];
         }
 
 
@@ -64,12 +64,18 @@ namespace api.FriendsVersus.Data
                     command.Parameters.AddWithValue("$VerificationLink", request.InviteUrl);
                     var reader = await command.ExecuteReaderAsync();
                     await reader.ReadAsync();
-                    if(await GetUserIfExists(reader.GetInt32(0)) != null)
+                    User user = await GetUserIfExists(reader.GetInt32(0));
+                    if (user != null)
                     {
+                        SqliteCommand setUserIsVerified = new SqliteCommand(UserQueries.updateUserIsVerifiedQuery, conn);
+                        setUserIsVerified.Parameters.AddWithValue("$UserId", user.UserId);
+                        await setUserIsVerified.ExecuteScalarAsync(); 
+                        await conn.CloseAsync();
                         return new TokenResponse(){
-                            Token = await tokenManager.GrantToken(reader.GetInt32(0))
+                            Token = await tokenManager.GrantToken(user.UserId)
                         };
                     }
+                    await conn.CloseAsync();
                     return null;
                 }
             } catch(SqliteException e)
@@ -194,6 +200,7 @@ namespace api.FriendsVersus.Data
                 var reader = await command.ExecuteReaderAsync();
                 await reader.ReadAsync();
                 var pass = reader.GetString(0);
+                conn.Close();
                 if (pass == hashedPassword)
                 {
                     return new TokenResponse()

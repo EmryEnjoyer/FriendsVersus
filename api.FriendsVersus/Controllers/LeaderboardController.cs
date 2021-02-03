@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using api.FriendsVersus.Auth;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +13,13 @@ namespace api.FriendsVersus.Controllers
 {
     [Route("api/leaderboard")]
     [ApiController]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class LeaderboardController : APIController
     {
+        public LeaderboardController(ITokenManager tokenManager) : base(tokenManager)
+        {
+
+        }
         [HttpPost("create")]
         public async Task createLeaderboard(CancellationToken token) {
             throw new NotImplementedException();

@@ -139,13 +139,6 @@ namespace api.FriendsVersus.Data
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
-            using (SqliteConnection conn = new SqliteConnection(_connectionString))
-            {
-                conn.Open();
-                SqliteCommand command = new SqliteCommand(UserQueries.createUserVerificationIndexOnLink, conn);
-                await command.ExecuteNonQueryAsync();
-                conn.Close();
-            }
 
         }
     }

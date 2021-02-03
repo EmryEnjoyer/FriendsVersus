@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using api.FriendsVersus.Auth;
 using api.FriendsVersus.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,10 @@ namespace api.FriendsVersus.Controllers
     [ApiController]
     public class UserLeaderboardMembershipController : APIController
     {
+        public UserLeaderboardMembershipController(ITokenManager tokenManager) : base(tokenManager)
+        {
+
+        }
         [HttpGet("{userId}/getleaderboards")]
         public async Task<IEnumerable<Leaderboard>> getUserLeaderboards([FromBody]ListUserLeaderboardsRequest request, CancellationToken token)
         {

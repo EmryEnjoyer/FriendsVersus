@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using api.FriendsVersus.Auth;
 using api.FriendsVersus.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -15,6 +16,10 @@ namespace api.FriendsVersus.Controllers
     [Authorize]
     public class ChallengeController : APIController
     {
+        public ChallengeController(ITokenManager tokenManager) : base(tokenManager)
+        {
+
+        }
         /// <summary>
         /// Creates a challenge
         /// </summary>
