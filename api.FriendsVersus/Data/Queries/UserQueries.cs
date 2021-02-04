@@ -29,6 +29,11 @@ namespace api.FriendsVersus.Data
                 Users
             WHERE
                 Username = $Username";
+        public const string getAllUsers = @"
+            SELECT
+                UserId
+            FROM
+                Users";
         public const string getUserByUserIdQuery = @"
             SELECT
                 UserId,
@@ -151,6 +156,9 @@ namespace api.FriendsVersus.Data
         public const string deauthorizeUserQuery = @"
             DELETE FROM Tokens WHERE Token = $Token
         ";
+        public const string getTokenFromUserId = @"
+            SELECT Token FROM Tokens WHERE UserId=$UserId
+        ";
         /*
          User Creation Verification
         */
@@ -167,5 +175,6 @@ namespace api.FriendsVersus.Data
         public const string getUserIdFromVerificationLink = @"
             SELECT UserId FROM UserVerificationLinks WHERE VerificationLink=$VerificationLink
         ";
+        
     }
 }

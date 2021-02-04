@@ -4,9 +4,6 @@ using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,8 +16,8 @@ namespace api.FriendsVersus.Data
 
         public UserData(IConfiguration config)
         {
-            _connectionString = config.ThrowIfNull("Configuration").GetConnectionString("Appdata").ThrowIfNull("connectionString");
-            //_connectionString = config.GetSection("connectionStrings")["AppData"];
+            //_connectionString = config.ThrowIfNull("Configuration").GetConnectionString("Appdata").ThrowIfNull("connectionString");
+            _connectionString = config.GetSection("connectionStrings")["AppData"];
         }
 
 
@@ -210,6 +207,25 @@ namespace api.FriendsVersus.Data
                 }
                 throw new UnauthorizedAccessException();
              }
+        }
+
+        public async Task<IEnumerable<User>> GetUsers(CancellationToken token)
+        {
+            List<User> users = new List<User>();
+            using(SqliteConnection conn = new SqliteConnection(_connectionString))
+            {
+                await conn.OpenAsync();
+                SqliteCommand command = new SqliteCommand(UserQueries.getAllUsers, conn);
+
+                var reader = await command.ExecuteReaderAsync();
+                while(await reader.ReadAsync())
+                {
+                    User user = await GetUserIfExists(reader.GetInt16(0));
+                    users.Add(user);
+                }
+                await conn.CloseAsync();
+            }
+            return users;
         }
     }
 }

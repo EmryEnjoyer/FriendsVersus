@@ -67,7 +67,7 @@ namespace api.FriendsVersus.Controllers
         /// </summary>
         [HttpGet("users")]
         public async Task<IEnumerable<User>> listUsers(CancellationToken token) {
-            throw new NotImplementedException();
+            return await accessLayer.GetUsers(token);
         }
         /// <summary>
         /// Handles request to get user

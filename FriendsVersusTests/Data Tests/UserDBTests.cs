@@ -250,5 +250,17 @@ namespace FriendsVersusTests.Data_Tests
                 conn.Close();
             }
         }
+
+        [TestMethod]
+        public async Task TestCanAllUsersBeGotten()
+        {
+            Mock<IConfiguration> mockConfig = new Mock<IConfiguration>();
+            mockConfig.Setup(config => config.GetSection("connectionStrings")["AppData"])
+                .Returns("Data Source=D:/TestDBEnvironment/FriendsVersus/FriendsVersus.db");
+
+            UserData userData = new UserData(mockConfig.Object);
+
+            await userData.GetUsers(new System.Threading.CancellationToken());
+        }
     }
 }

@@ -43,6 +43,7 @@ namespace api.FriendsVersus.Auth
             {
                 var token = GenerateJSONToken(user, _config);
                 var hashToken = token.hashString();
+                
                 using (SqliteConnection connection = new SqliteConnection(connectionString))
                 {
                     connection.Open();
@@ -154,6 +155,18 @@ namespace api.FriendsVersus.Auth
                 signingCredentials: credentials);
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
+        private async Task<string> getTokenFromUserId(int userId) { 
+            using(SqliteConnection conn = new SqliteConnection(connectionString))
+            {
+                await conn.OpenAsync();
+                SqliteCommand command = new SqliteCommand(UserQueries.getTokenFromUserId, conn);
+                command.Parameters.AddWithValue("$UserId", userId);
+                var reader = await command.ExecuteReaderAsync();
+                await reader.ReadAsync();
+                string s = reader.GetString(0);
+                await conn.CloseAsync();
+                return s;
+            }
+        }
     }
 }
