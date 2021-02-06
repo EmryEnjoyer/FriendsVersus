@@ -22,41 +22,33 @@ namespace api.FriendsVersus.Auth
         {
             _config = config;
             _accessLayer = access;
-            connectionString = config.GetSection("connectionStrings")["AppData"];
-            //connectionString = config.ThrowIfNull("Configuration").GetConnectionString("Appdata").ThrowIfNull("connectionString");
+            //connectionString = config.GetSection("connectionStrings")["AppData"];
+            connectionString = config.ThrowIfNull("Configuration").GetConnectionString("Appdata").ThrowIfNull("connectionString");
         }
 
-        /// <summary>
-        /// Check for user by username or userId and return a JSON Token.
-        /// </summary>
-        /// <param name="username">Username to get user (Must be unique)</param>
-        /// <param name="userId">UserId to get user (Must be unique</param>
-        /// <returns>New JSON Token</returns>
+        /// <inheritdoc/>
         public async Task<string> GrantToken(string username)
         {
             User user;
             user = await (_accessLayer.GetUserIfExists(username));
-            
-            
-            
+
             if (user != null)
             {
                 var token = GenerateJSONToken(user, _config);
                 var hashToken = token.hashString();
-                
+
                 using (SqliteConnection connection = new SqliteConnection(connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
                     SqliteCommand command = new SqliteCommand(UserQueries.authorizeUserQuery, connection);
                     command.Parameters.AddWithValue("$UserId", user.UserId);
                     command.Parameters.AddWithValue("$Token", hashToken);
 
                     await command.ExecuteScalarAsync();
-                    connection.Close();
+                    await connection.CloseAsync();
                 }
                 return token;
             }
-            
             return null;
         }
 
@@ -86,7 +78,7 @@ namespace api.FriendsVersus.Auth
 
         public async Task RevokeToken(string token)
         {
-            using(SqliteConnection connection = new SqliteConnection(connectionString))
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
             {
                 await connection.OpenAsync();
                 SqliteCommand command = new SqliteCommand(UserQueries.deauthorizeUserQuery, connection);
@@ -106,8 +98,8 @@ namespace api.FriendsVersus.Auth
                 command.Parameters.AddWithValue("$Token", token.hashString());
 
                 SqliteDataReader reader = await command.ExecuteReaderAsync();
-
                 await reader.ReadAsync();
+                await connection.CloseAsync();
                 try
                 {
                     if (await reader.IsDBNullAsync(0))
@@ -115,20 +107,15 @@ namespace api.FriendsVersus.Auth
                         return null;
                     }
                     string result = reader.GetString(0);
-                    await connection.CloseAsync();
                     return result;
-                } catch(InvalidOperationException e)
+                }
+                catch (InvalidOperationException e)
                 {
                     return null;
                 }
-                
+
             }
         }
-        /*
-          else
-            {
-                user = await (_accessLayer.GetUserIfExists(null, userId));
-            }*/
         /// <summary>
         /// Constructs a new JWT Token from the User information
         /// </summary>
@@ -154,19 +141,6 @@ namespace api.FriendsVersus.Auth
                 expires: DateTime.Now.AddMinutes(120),
                 signingCredentials: credentials);
             return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-        private async Task<string> getTokenFromUserId(int userId) { 
-            using(SqliteConnection conn = new SqliteConnection(connectionString))
-            {
-                await conn.OpenAsync();
-                SqliteCommand command = new SqliteCommand(UserQueries.getTokenFromUserId, conn);
-                command.Parameters.AddWithValue("$UserId", userId);
-                var reader = await command.ExecuteReaderAsync();
-                await reader.ReadAsync();
-                string s = reader.GetString(0);
-                await conn.CloseAsync();
-                return s;
-            }
         }
     }
 }

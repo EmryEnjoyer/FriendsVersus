@@ -14,7 +14,8 @@ namespace FriendsVersusTests.Data_Tests
         public const string connectionString = "Data Source=D:/TestDBEnvironment/FriendsVersus/FriendsVersus.db;";
 
         [TestMethod]
-        public void TestAllWorksFine() {
+        public void TestAllWorksFine()
+        {
             TestUserTableCanBeCreated();
             TestUsernameIndexCanBeCreated();
             TestUserCanBeCreated();
@@ -170,9 +171,9 @@ namespace FriendsVersusTests.Data_Tests
             }
         }
         [TestMethod]
-        public void TestCanUserEmailBeUpdated() 
-        { 
-            using(SqliteConnection conn = new SqliteConnection(connectionString))
+        public void TestCanUserEmailBeUpdated()
+        {
+            using (SqliteConnection conn = new SqliteConnection(connectionString))
             {
                 conn.Open();
                 SqliteCommand command = new SqliteCommand(UserQueries.updateEmailQuery, conn);
@@ -187,7 +188,7 @@ namespace FriendsVersusTests.Data_Tests
                 {
                     Assert.AreEqual(results.GetString(2), "Test8");
                 }
-                
+
                 conn.Close();
             }
         }
@@ -195,7 +196,7 @@ namespace FriendsVersusTests.Data_Tests
         [TestMethod]
         public void TestCanUserPrivilegesBeUpdated()
         {
-            using(SqliteConnection conn = new SqliteConnection(connectionString))
+            using (SqliteConnection conn = new SqliteConnection(connectionString))
             {
                 conn.Open();
                 SqliteCommand command = new SqliteCommand(UserQueries.updateUserIsAdminQuery, conn);
@@ -239,8 +240,9 @@ namespace FriendsVersusTests.Data_Tests
         }
 
         [TestMethod]
-        public void TestUserCanBeDeleted() { 
-            using(SqliteConnection conn = new SqliteConnection(connectionString))
+        public void TestUserCanBeDeleted()
+        {
+            using (SqliteConnection conn = new SqliteConnection(connectionString))
             {
                 conn.Open();
                 SqliteCommand command = new SqliteCommand(UserQueries.deleteUserQuery, conn);

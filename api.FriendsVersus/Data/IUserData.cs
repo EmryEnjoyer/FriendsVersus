@@ -40,7 +40,11 @@ namespace api.FriendsVersus.Data
         /// <param name="Username"></param>
         /// <returns></returns>
         Task<TokenResponse> AuthenticateUserAsync(UserLoginRequest request, ITokenManager tokenManager, CancellationToken token);
-
+        /// <summary>
+        /// Get all users
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns>A list containing all users in the database</returns>
         Task<IEnumerable<User>> GetUsers(CancellationToken token);
 
         Task<int> GetUserIdFromUsernameAsync(string Username);

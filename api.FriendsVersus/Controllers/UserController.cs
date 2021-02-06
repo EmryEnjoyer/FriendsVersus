@@ -33,7 +33,8 @@ namespace api.FriendsVersus.Controllers
         /// </summary>
         [HttpPost("create")]
         [AllowAnonymous]
-        public async Task<UserCreationResponse> createUser([FromBody] UserCreationRequest request, CancellationToken token) {
+        public async Task<UserCreationResponse> createUser([FromBody] UserCreationRequest request, CancellationToken token)
+        {
             return await accessLayer.CreateUserAsync(request, token);
         }
         /// <summary>
@@ -41,7 +42,8 @@ namespace api.FriendsVersus.Controllers
         /// </summary>
         [HttpPut("Verify/{inviteLink}")]
         [AllowAnonymous]
-        public async Task<TokenResponse> authenticateCreation([FromRoute] string inviteLink, CancellationToken token) {
+        public async Task<TokenResponse> authenticateCreation([FromRoute] string inviteLink, CancellationToken token)
+        {
             UserEmailAuthenticationRequest request = new UserEmailAuthenticationRequest()
             {
                 InviteUrl = inviteLink
@@ -52,36 +54,41 @@ namespace api.FriendsVersus.Controllers
         /// Handles request to update username
         /// </summary>
         [HttpPut("{userId}/updateusername")]
-        public async Task<bool> updateUsername([FromBody] UpdateUsernameRequest request, CancellationToken token) {
+        public async Task<bool> updateUsername([FromBody] UpdateUsernameRequest request, CancellationToken token)
+        {
             throw new NotImplementedException();
         }
         /// <summary>
         /// Handles request to update the user admin privilege
         /// </summary>
         [HttpPut("{userId}/updatePrivileges")]
-        public async Task<bool> updateUserPrivileges([FromRoute] int userId, UpdateUserAppPrivilegesRequest request, CancellationToken token) {
+        public async Task<bool> updateUserPrivileges([FromRoute] int userId, UpdateUserAppPrivilegesRequest request, CancellationToken token)
+        {
             throw new NotImplementedException();
         }
         /// <summary>
         /// gets a list of users
         /// </summary>
         [HttpGet("users")]
-        public async Task<IEnumerable<User>> listUsers(CancellationToken token) {
+        public async Task<IEnumerable<User>> listUsers(CancellationToken token)
+        {
             return await accessLayer.GetUsers(token);
         }
         /// <summary>
         /// Handles request to get user
         /// </summary>
         [HttpGet("{userId}/get")]
-        public async Task<User> getUser([FromRoute] int userId, CancellationToken token) {
+        public async Task<User> getUser([FromRoute] int userId, CancellationToken token)
+        {
             return await accessLayer.GetUserIfExists(userId);
         }
         /// <summary>
         /// Handles request to update user email
         /// </summary>
         [HttpPut("{userId}/updateemail")]
-        public async Task<bool> UpdateEmail([FromRoute] int userId, [FromBody] UpdateEmailRequest request, CancellationToken token) {
+        public async Task<bool> UpdateEmail([FromRoute] int userId, [FromBody] UpdateEmailRequest request, CancellationToken token)
+        {
             throw new NotImplementedException();
         }
-    }   
+    }
 }

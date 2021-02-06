@@ -33,7 +33,7 @@ namespace api.FriendsVersus
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
+
 
             // Dependency Injection
             services.AddTransient<IUserData, UserData>();
@@ -44,11 +44,11 @@ namespace api.FriendsVersus
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api.FriendsVersus.net", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
-                    Name="Authorization",
-                    Description="JWT Authorization",
-                    In=ParameterLocation.Header,
-                    Type=SecuritySchemeType.ApiKey,
-                    Scheme="Bearer"
+                    Name = "Authorization",
+                    Description = "JWT Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
                 });
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement()
                 {
@@ -70,10 +70,12 @@ namespace api.FriendsVersus
             });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddCookie(options => {
+                .AddCookie(options =>
+                {
                     options.LoginPath = "/api/login/token";
                 })
-                .AddJwtBearer(options => {
+                .AddJwtBearer(options =>
+                {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
@@ -102,7 +104,7 @@ namespace api.FriendsVersus
 
             app.UseAuthentication();
             app.UseAuthorization();
-            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

@@ -28,7 +28,7 @@ namespace FriendsVersusTests.AuthTests
             Mock<IConfiguration> mockConfiguration = new Mock<IConfiguration>();
             mockConfiguration.Setup(config => config["Jwt:Issuer"]).Returns("anyText");
             mockConfiguration.Setup(config => config["Jwt:Key"]).Returns("anyText2ElectricBoogaloo");
-            
+
             TokenManager manager = new TokenManager(mockConfiguration.Object, mockUserData.Object);
 
             string token = await manager.GrantToken("Text0");
@@ -49,7 +49,7 @@ namespace FriendsVersusTests.AuthTests
 
             TokenManager manager = new TokenManager(mockConfiguration.Object, mockUserData.Object);
             string token = await manager.GetUserIdByTokenAsync(Token);
-            
+
         }
     }
 }

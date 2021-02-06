@@ -24,7 +24,11 @@ namespace api.FriendsVersus.Data
             return false;
         }
         */
-
+        /// <summary>
+        /// Hashes the string with SHA2 and returns it.
+        /// </summary>
+        /// <param name="instance">the string to hash</param>
+        /// <returns></returns>
         public static string hashString(this string instance)
         {
             var sha256 = SHA256.Create();

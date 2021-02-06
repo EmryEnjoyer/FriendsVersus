@@ -83,6 +83,7 @@ namespace api.FriendsVersus.Data
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
+            //User Auth Links
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
@@ -90,6 +91,8 @@ namespace api.FriendsVersus.Data
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
+
+            //Username Index
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
@@ -97,6 +100,8 @@ namespace api.FriendsVersus.Data
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
+
+            //User verification index
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
@@ -104,6 +109,7 @@ namespace api.FriendsVersus.Data
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
+            //Learboard name index
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
@@ -111,6 +117,7 @@ namespace api.FriendsVersus.Data
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
+            //Challenge Accepted Index
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
@@ -118,6 +125,7 @@ namespace api.FriendsVersus.Data
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
+            //User challenged ID index
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
@@ -125,6 +133,7 @@ namespace api.FriendsVersus.Data
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
+            //User is challenger id
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
@@ -132,6 +141,7 @@ namespace api.FriendsVersus.Data
                 await command.ExecuteNonQueryAsync();
                 conn.Close();
             }
+            //username index
             using (SqliteConnection conn = new SqliteConnection(_connectionString))
             {
                 conn.Open();
